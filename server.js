@@ -74,5 +74,5 @@ app.get("/login", function(req,res){
     login-page.html in the websites folder.
   */
   res.send(fs.readFileSync("./websites/login-page.html", "utf-8"))
-  res.end() // End response
+  res.end() // End response.
 })
