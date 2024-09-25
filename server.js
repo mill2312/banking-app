@@ -9,7 +9,6 @@
 
   ---------------------------------------------------------
 
-
       app.listen(port, function(){
         console.log("Example app listening on port " + port)
       })
@@ -50,7 +49,7 @@ const app = express()
 const port = 3000
 
 // Starts the server.
-app.listen(port, function(){
+var server = app.listen(port, function(){
   console.log("Example app listening on port " + port)
 })
 
@@ -81,4 +80,11 @@ app.get("/home", function(req,res){
   /*
     Not implemented yet, but /login should go here
   */
+})
+
+process.on('SIGTERM', () => {
+  debug('SIGTERM signal received: closing HTTP server')
+  server.close(() => {
+    debug('HTTP server closed')
+  })
 })
