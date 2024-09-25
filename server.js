@@ -76,3 +76,9 @@ app.get("/login", function(req,res){
   res.send(fs.readFileSync("./websites/login-page.html", "utf-8"))
   res.end() // End response.
 })
+
+app.get("/home", function(req,res){
+  /*
+    Not implemented yet, but /login should go here
+  */
+})
