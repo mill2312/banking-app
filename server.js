@@ -7,6 +7,13 @@
 
   To stop press CTRL-C in terminal.
 
+
+sudo lof -i :3000
+kill -9 [PID]
+
+OR
+
+killall -9 node
   ---------------------------------------------------------
 
       app.listen(port, function(){
