@@ -4,9 +4,9 @@ Github Tutorial: https://www.youtube.com/watch?v=z5jZ9lrSpqk&ab_channel=MaxonTec
 
 # Tools Used
 
-[NeDB: Database](https://github.com/louischatriot/nedb)
-[ExpressJS: Hosting the Local Server](https://expressjs.com/)
-[NodeJS: Running JavaScript Outside of the Browser](https://nodejs.org/en)
+[NeDB: Database](https://github.com/louischatriot/nedb) \
+[ExpressJS: Hosting the Local Server](https://expressjs.com/) \
+[NodeJS: Running JavaScript Outside of the Browser](https://nodejs.org/en) \
 
 # Installation
 First, install NodeJS/NPM.
