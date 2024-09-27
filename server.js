@@ -52,6 +52,8 @@ killall -9 node
 
 const fs = require("fs") // File System (allows us to read files)
 const express = require('express') // Express local server-hosting library
+const Datastore = require("nedb") // Persistent File Database:  https://www.npmjs.com/package/nedb
+var db = new Datastore({filename: "./userData.db", autoload: true})
 const app = express()
 const port = 3000
 
