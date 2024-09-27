@@ -52,9 +52,11 @@ killall -9 node
 
 const fs = require("fs") // File System (allows us to read files)
 const express = require('express') // Express local server-hosting library
+const validation = require("./server-input-validation")
 const Datastore = require("nedb") // Persistent File Database:  https://www.npmjs.com/package/nedb
 var db = new Datastore({filename: "./userData.db", autoload: true})
 const app = express()
+app.use(express.json())
 const port = 3000
 
 // Starts the server.
@@ -91,9 +93,39 @@ app.get("/home", function(req,res){
   */
 })
 
-process.on('SIGTERM', () => {
-  debug('SIGTERM signal received: closing HTTP server')
-  server.close(() => {
-    debug('HTTP server closed')
+/**
+ * Request to this endpoint must have:
+ * username : string
+ * name : string
+ * password : string
+ */
+app.post("/endpoint/create-new-user", function(req,res){
+
+  // Validate that the request JSON is correct
+
+  if(validation.createNewUser.validate(req.body).error){
+    res.json({
+      success: false,
+      message: validation.createNewUser.validate(req.body).error
+    })
+    return
+  }
+
+  // If user document does not exist, create it
+
+
+  db.findOne({username: req.body.username}, function(err,doc){
+    if(err){throw new Error("Error in checking if username already exists")}
+        
+    if(!doc){
+      db.insert({
+        name: req.body.name,
+        username: req.body.username,
+        password: req.body.password
+      })
+    }
   })
 })
+
+// Our client functions
+app.use(express.static('static'))

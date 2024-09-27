@@ -14,13 +14,22 @@
 
     -->
 
-    
+    <script src="/client-functions.js"></script>
     <script>
         function getTextBoxValue() {
             var textBox = document.getElementById("myTextBox");
             var value = textBox.value;
             alert("You entered: " + value);
         }
+
+        async function testRequest(){
+    
+            let returned = await makeServerRequest("create-new-user", {username: "MyUsername", password: "MyPassword1234", name: "My Name"})
+            console.log("Returned:")
+            console.log(returned)
+
+        }
+        testRequest()
     </script>
 
 
