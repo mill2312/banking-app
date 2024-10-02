@@ -87,6 +87,12 @@ app.get("/login", function(req,res){
   res.end() // End response.
 })
 
+app.get("/payments", function(req,res){
+  res.send(fs.readFileSync("./websites/payment-page.html", "utf-8"))
+  res.end() // End response
+})
+
+
 app.get("/home", function(req,res){
   /*
     Not implemented yet, but /login should go here
@@ -101,12 +107,15 @@ app.get("/home", function(req,res){
  */
 app.post("/endpoint/create-new-user", function(req,res){
 
+  let requestJson = req.body
+  console.log(requestJson)
+
   // Validate that the request JSON is correct
 
-  if(validation.createNewUser.validate(req.body).error){
+  if(validation.createNewUser.validate(requestJson).error){
     res.json({
       success: false,
-      message: validation.createNewUser.validate(req.body).error
+      message: validation.createNewUser.validate(requestJson).error
     })
     return
   }
@@ -114,24 +123,24 @@ app.post("/endpoint/create-new-user", function(req,res){
   // If user document does not exist, create it
 
 
-  db.findOne({username: req.body.username}, function(err,doc){
+  db.findOne({username: requestJson.username}, function(err,doc){
     if(err){throw new Error("Error in checking if username already exists")}
       console.log("Found result")
     if(!doc){
       db.insert({
-        name: req.body.name,
-        username: req.body.username,
-        password: req.body.password
+        name: requestJson.name,
+        username: requestJson.username,
+        password: requestJson.password
       })
+      console.log("Success")
+      res.json({success: true})
+      res.end()
     } else {
+      console.log("Fail")
       res.json({success: false})
       res.end()
-      return
     }
   })
-
-  res.json({success: true})
-  res.end()
 })
 
 // Our client functions

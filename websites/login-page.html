@@ -8,6 +8,8 @@
     <input id="username-input">
     <label for="password-input">Password</label>
     <input id="password-input" type="password">
+    <br>
+    <button id="sign-up-button">Sign Up</button>
 
     <!--
         <input type="text" id="myInput" placeholder="Enter text">
@@ -25,10 +27,30 @@
             alert("You entered: " + value);
         }
 
+        /*
+            Sign Up
+        */
+        document.getElementById("sign-up-button").addEventListener("click", async function(){
+            // Get user inputs
+            // Make the server request
+            // Tell the user if it was successful
+        })
+
+        /* When using makeServerRequest, you must call it from an async
+        function and use await when making the call (e.g. await makeServerRequest(...)).
+        This allows us to wait for server response before continuing to the next line of code.
+        If this wasn't done, returned would be a special class type called Promise, which
+        represents a unfulfilled, waiting request.
+        */
         async function testRequest(){
             let returned = await makeServerRequest("create-new-user", {username: "MyUsername", password: "MyPassword1234", name: "My Name"})
-            console.log("Returned:")
-            console.log(returned)
+            // console.log prints to the Inspect Element console. (Use CTRL+SHIFT+I on site to see)
+            console.log("Returned JSON: " + JSON.stringify(returned))  // JSON.stringify turns a JSON object into a string
+            if(returned.success == true){
+                console.log("Success!")
+            } else {
+                console.log("Failure!")
+            }
         }
         testRequest()
     </script>
