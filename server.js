@@ -116,15 +116,22 @@ app.post("/endpoint/create-new-user", function(req,res){
 
   db.findOne({username: req.body.username}, function(err,doc){
     if(err){throw new Error("Error in checking if username already exists")}
-        
+      console.log("Found result")
     if(!doc){
       db.insert({
         name: req.body.name,
         username: req.body.username,
         password: req.body.password
       })
+    } else {
+      res.json({success: false})
+      res.end()
+      return
     }
   })
+
+  res.json({success: true})
+  res.end()
 })
 
 // Our client functions
