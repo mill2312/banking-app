@@ -10,6 +10,7 @@
     <input id="password-input" type="password">
     <br>
     <button id="login-button">Login</button>
+    <button id="enter-button">Enter</button>
 
     <!--
         <input type="text" id="myInput" placeholder="Enter text">
@@ -29,6 +30,16 @@
         console.log("Button clicked!");
         //app.get("/login", function(req,res)
         window.location.href = "/login"
+    });
+
+    const enterbutton = document.querySelector("#enter-button");
+
+    loginbutton.addEventListener("click", () => {
+        console.log("Button clicked!");
+        //app.get("/login", function(req,res)
+        if (testRequest()) {
+            window.location.href = "/payment-page"
+        }
     });
 
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects
@@ -56,7 +67,7 @@
         */
         async function testRequest(){
             let returned = await makeServerRequest("create-new-user", 
-            {username: "MyUsername", password: "MyPassword1234", name: "My Name"})
+            {username: "document", password: "MyPassword1234", name: "My Name"})
             // console.log prints to the Inspect Element console. (Use CTRL+SHIFT+I on site to see)
             console.log("Returned JSON: " + JSON.stringify(returned))  // JSON.stringify turns a JSON object into a string
             if(returned.success == true){
