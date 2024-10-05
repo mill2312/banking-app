@@ -92,6 +92,12 @@ app.get("/signup", function(req,res){
   res.end() // End response.
 })
 
+app.get("/login", function(req,res){
+  res.send(fs.readFileSync("./websites/login-page.html", "utf-8"))
+  res.end() // End response.
+})
+
+
 app.get("/payments", function(req,res){
   res.send(fs.readFileSync("./websites/payment-page.html", "utf-8"))
   res.end() // End response
