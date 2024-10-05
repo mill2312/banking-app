@@ -83,7 +83,9 @@ app.get("/login", function(req,res){
     Here we send a response from the content of the file
     login-page.html in the websites folder.
   */
+  //console.log("In Login"); //true
   res.send(fs.readFileSync("./websites/login-page.html", "utf-8"))
+  console.log("here"); //also true. This is just temporary
   res.end() // End response.
 })
 
@@ -106,7 +108,7 @@ app.get("/home", function(req,res){
  * password : string
  */
 app.post("/endpoint/create-new-user", function(req,res){
-
+  console.log("Creating User"); //false
   let requestJson = req.body
   console.log(requestJson)
 
@@ -123,9 +125,9 @@ app.post("/endpoint/create-new-user", function(req,res){
   // If user document does not exist, create it
 
 
-  db.findOne({username: requestJson.username}, function(err,doc){
+  db.findOne({username: requestJson.username}, function(err,doc){  
     if(err){throw new Error("Error in checking if username already exists")}
-      console.log("Found result")
+      console.log("Found result")  
     if(!doc){
       db.insert({
         name: requestJson.name,
