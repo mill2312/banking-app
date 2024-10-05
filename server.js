@@ -155,7 +155,7 @@ app.post("/endpoint/create-new-user", function(req,res){
   if(validation.createNewUser.validate(requestJson).error){
     res.json({
       success: false,
-      message: validation.createNewUser.validate(requestJson).error
+      message: validation.createNewUser.validate(requestJson).error.message
     })
     return
   }
