@@ -103,6 +103,25 @@ app.get("/home", function(req,res){
   */
 })
 
+app.post("/endpoint/sign-in", function(req,res){
+  let requestJson = req.body
+  console.log(requestJson)
+
+})
+
+app.post("/endpoint/pay", function(req,res){
+  let requestJson = req.body
+  console.log(requestJson)
+
+})
+
+app.post("/endpoint/request", function(req,res){
+  let requestJson = req.body
+  console.log(requestJson)
+
+})
+
+
 /**
  * Request to this endpoint must have:
  * username : string

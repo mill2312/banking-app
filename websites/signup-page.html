@@ -45,7 +45,6 @@
         represents a unfulfilled, waiting request.
         */
         async function testRequest(){
-            await makeServerRequest()
             let returned = await makeServerRequest("create-new-user", 
             {username: "MyUsername", password: "MyPassword1234", name: "My Name"})
             // console.log prints to the Inspect Element console. (Use CTRL+SHIFT+I on site to see)
