@@ -20,6 +20,14 @@
     <script>
 
 
+    const loginbutton = document.querySelector("#myButton");
+
+        // Add a click event listener
+        loginbutton.addEventListener("click", () => {
+            console.log("Button clicked!");
+            //app.get("/login", function(req,res)
+            window.location.href = "/login"
+        });
 
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects
         
