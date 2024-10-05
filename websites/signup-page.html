@@ -9,7 +9,7 @@
     <label for="password-input">Password</label>
     <input id="password-input" type="password">
     <br>
-    <button id="sign-up-button">Sign Up</button>
+    <button id="login-button">Login button</button>
 
     <!--
         <input type="text" id="myInput" placeholder="Enter text">
@@ -20,16 +20,16 @@
     <script>
 
 
-    const loginbutton = document.querySelector("#sign-up-button");
+    const loginbutton = document.querySelector("#login-button");
 
-        // Add a click event listener
-        loginbutton.addEventListener("click", () => {
-            console.log("Button clicked!");
-            //app.get("/login", function(req,res)
-            window.location.href = "/login"
-        });
+    // Add a click event listener
+    loginbutton.addEventListener("click", () => {
+        console.log("Button clicked!");
+        //app.get("/login", function(req,res)
+        window.location.href = "/login"
+    });
 
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects
         
         function getTextBoxValue() {
             var textBox = document.getElementById("myTextBox");
