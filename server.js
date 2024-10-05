@@ -126,6 +126,8 @@ app.post("/endpoint/sign-in", function(req,res){
   // res.end()
 })
 
+
+// Josh will work on this
 app.post("/endpoint/pay", function(req,res){
   let requestJson = req.body
   console.log(requestJson)

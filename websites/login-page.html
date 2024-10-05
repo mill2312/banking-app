@@ -20,10 +20,10 @@
     <script>
 
 
-    const loginbutton = document.querySelector("#sign-up-button");
+        const signupButton = document.querySelector("#sign-up-button");
 
         // Add a click event listener
-        loginbutton.addEventListener("click", () => {
+        signupButton.addEventListener("click", () => {
             console.log("Button clicked!");
             //app.get("/login", function(req,res)
             window.location.href = "/signup"
@@ -38,56 +38,11 @@
         }
 
         /*
-            Sign Up
+            Log In
         */
-        document.getElementById("sign-up-button").addEventListener("click", async function(){
-            // Get user inputs
-            // Make the server request
-            // Tell the user if it was successful
+        document.getElementById("login-button").addEventListener("click", async function(){
+            
         })
-
-        /* When using makeServerRequest, you must call it from an async
-        function and use await when making the call (e.g. await makeServerRequest(...)).
-        This allows us to wait for server response before continuing to the next line of code.
-        If this wasn't done, returned would be a special class type called Promise, which
-        represents a unfulfilled, waiting request.
-        */
-
-        /*
-        async function testRequest(){
-            let returned = await makeServerRequest("create-new-user", 
-            {username: "MyUsername", password: "MyPassword1234", name: "My Name"})
-            // console.log prints to the Inspect Element console. (Use CTRL+SHIFT+I on site to see)
-            console.log("Returned JSON: " + JSON.stringify(returned))  // JSON.stringify turns a JSON object into a string
-            if(returned.success == true){
-                console.log("Success!")
-            } else {
-                console.log("Failure!")
-            }
-        }
-            */
-        document.getElementById("enter-button").addEventListener("click", async function(){
-            // Get user inputs
-            // Make the server request
-            // Tell the user if it was successful
-
-            console.log("Enter button clicked")
-
-            let returned = await makeServerRequest("create-new-user", 
-            {username: document.getElementById("username-input").value, password: document.getElementById("password-input").value, name: "My Name"})
-            // console.log prints to the Inspect Element console. (Use CTRL+SHIFT+I on site to see)
-            console.log("Returned JSON: " + JSON.stringify(returned))  // JSON.stringify turns a JSON object into a string
-            if(returned.success == true){
-                console.log("Success!")
-                window.location.href = "/payment-page"
-
-                // Log In the user now
-            } else {
-                console.log("Failure!")
-                alert("Account already exists")
-            }
-        })
-        testRequest()
     </script>
 
 
