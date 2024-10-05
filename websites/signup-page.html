@@ -58,11 +58,11 @@
             if(returned.success == true){
                 console.log("Success!")
                 window.location.href = "/payment-page"
-                
+
                 // Log In the user now
             } else {
                 console.log("Failure!")
-                alert("Account already exists")
+                alert(returned.message)
             }
         })
     </script>
