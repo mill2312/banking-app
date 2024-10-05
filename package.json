@@ -12,6 +12,7 @@
     "express": "^4.21.0",
     "joi": "^17.13.3",
     "nedb": "^1.8.0",
-    "nedb-promises": "^6.2.3"
+    "nedb-promises": "^6.2.3",
+    "sessionjs": "^1.2.4"
   }
 }
