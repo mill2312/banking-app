@@ -57,15 +57,7 @@
             // Get user inputs
             // Make the server request
             // Tell the user if it was successful
-        })
 
-        /* When using makeServerRequest, you must call it from an async
-        function and use await when making the call (e.g. await makeServerRequest(...)).
-        This allows us to wait for server response before continuing to the next line of code.
-        If this wasn't done, returned would be a special class type called Promise, which
-        represents a unfulfilled, waiting request.
-        */
-        async function testRequest(){
             let returned = await makeServerRequest("create-new-user", 
             {username: "document", password: "MyPassword1234", name: "My Name"})
             // console.log prints to the Inspect Element console. (Use CTRL+SHIFT+I on site to see)
@@ -75,8 +67,7 @@
             } else {
                 console.log("Failure!")
             }
-        }
-        testRequest()
+        })
     </script>
 
 
