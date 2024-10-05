@@ -177,7 +177,7 @@ app.post("/endpoint/create-new-user", function(req,res){
       res.end()
     } else {
       console.log("Fail")
-      res.json({success: false})
+      res.json({success: false, message: "User already exists"})
       res.end()
     }
   })
