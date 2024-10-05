@@ -1,5 +1,3 @@
-
-import SessionJs from 'sessionjs';
 /*
   https://expressjs.com/en/starter/hello-world.html
 
