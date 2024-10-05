@@ -110,14 +110,17 @@ app.get("/home", function(req,res){
   */
 })
 
+
 app.post("/endpoint/sign-in", function(req,res){
   let requestJson = req.body
   console.log(requestJson)
   // recieve username and password
 
   // get session id and store it to user in database
+  usersDb.findOne({username: requestJson.username, password: requestJson.password}, function(err,doc){  
 
-  
+  })
+
 })
 
 app.post("/endpoint/pay", function(req,res){
