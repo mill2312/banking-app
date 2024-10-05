@@ -7,7 +7,6 @@
 
   To stop press CTRL-C in terminal.
 
-
 sudo lof -i :3000
 kill -9 [PID]
 
@@ -111,6 +110,8 @@ app.get("/home", function(req,res){
 })
 
 
+// https://github.com/louischatriot/nedb?tab=readme-ov-file#updating-documents
+
 app.post("/endpoint/sign-in", function(req,res){
   let requestJson = req.body
   console.log(requestJson)
@@ -121,6 +122,8 @@ app.post("/endpoint/sign-in", function(req,res){
 
   })
 
+  // res.json({success: false})
+  // res.end()
 })
 
 app.post("/endpoint/pay", function(req,res){
