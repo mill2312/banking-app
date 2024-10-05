@@ -32,15 +32,6 @@
         window.location.href = "/login"
     });
 
-    const enterbutton = document.querySelector("#enter-button");
-
-    enterbutton.addEventListener("click", () => {
-        console.log("Button clicked!");
-        //app.get("/login", function(req,res)
-        if (testRequest()) {
-            window.location.href = "/payment-page"
-        }
-    });
 
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects
         
@@ -53,19 +44,23 @@
         /*
             Sign Up
         */
-        document.getElementById("sign-up-button").addEventListener("click", async function(){
+        document.getElementById("enter-button").addEventListener("click", async function(){
             // Get user inputs
             // Make the server request
             // Tell the user if it was successful
 
+            console.log("Enter button clicked")
+
             let returned = await makeServerRequest("create-new-user", 
-            {username: "document", password: "MyPassword1234", name: "My Name"})
+            {username: document.getElementById("username-input").value, password: document.getElementById("password-input").value, name: "My Name"})
             // console.log prints to the Inspect Element console. (Use CTRL+SHIFT+I on site to see)
             console.log("Returned JSON: " + JSON.stringify(returned))  // JSON.stringify turns a JSON object into a string
             if(returned.success == true){
                 console.log("Success!")
+                window.location.href = "/payment-page"
             } else {
                 console.log("Failure!")
+                alert("Account already exists")
             }
         })
     </script>
