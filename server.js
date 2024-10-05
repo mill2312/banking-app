@@ -108,7 +108,7 @@ app.get("/home", function(req,res){
     Not implemented yet, but /login should go here
   */
 })
-
+// https://docs.google.com/document/d/1e9s9r5Pgr8ZN5dboi88qjAtcl5HRmjKyGr_VkoZ1sQ8/edit
 
 // https://github.com/louischatriot/nedb?tab=readme-ov-file#updating-documents
 
