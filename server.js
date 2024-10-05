@@ -56,7 +56,8 @@ const fs = require("fs") // File System (allows us to read files)
 const express = require('express') // Express local server-hosting library
 const validation = require("./server-input-validation")
 const Datastore = require("nedb") // Persistent File Database:  https://www.npmjs.com/package/nedb
-var db = new Datastore({filename: "./userData.db", autoload: true})
+var usersDb = new Datastore({filename: "./userData.db", autoload: true})
+var paymentsDb = new Datastore({filename: "./payments.db", autoloda: true})
 const app = express()
 app.use(express.json())
 const port = 3000
@@ -146,11 +147,11 @@ app.post("/endpoint/create-new-user", function(req,res){
   // If user document does not exist, create it
 
 
-  db.findOne({username: requestJson.username}, function(err,doc){  
+  usersDb.findOne({username: requestJson.username}, function(err,doc){  
     if(err){throw new Error("Error in checking if username already exists")}
       console.log("Found result")  
     if(!doc){
-      db.insert({
+      usersDb.insert({
         name: requestJson.name,
         username: requestJson.username,
         password: requestJson.password
