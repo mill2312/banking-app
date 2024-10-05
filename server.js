@@ -50,6 +50,8 @@ killall -9 node
 
 */
 
+// https://github.com/elixs-de/SessionJs
+
 const fs = require("fs") // File System (allows us to read files)
 const express = require('express') // Express local server-hosting library
 const validation = require("./server-input-validation")
@@ -73,18 +75,18 @@ app.get("/", function(req,res){
   */
   res.send(`
     Hello World!!!<br>
-    <a href="/login">Login Page</a>
+    <a href="/signup">Login Page</a>
   `)
   res.end() // End response
 })
 
-app.get("/login", function(req,res){
+app.get("/signup", function(req,res){
   /*
     Here we send a response from the content of the file
-    login-page.html in the websites folder.
+    signup-page.html in the websites folder.
   */
-  //console.log("In Login"); //true
-  res.send(fs.readFileSync("./websites/login-page.html", "utf-8"))
+  //console.log("In signup"); //true
+  res.send(fs.readFileSync("./websites/signup-page.html", "utf-8"))
   console.log("here"); //also true. This is just temporary
   res.end() // End response.
 })

@@ -19,6 +19,8 @@
     <script src="/client-functions.js"></script>
     <script>
 
+
+
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects
         
         function getTextBoxValue() {
@@ -43,7 +45,9 @@
         represents a unfulfilled, waiting request.
         */
         async function testRequest(){
-            let returned = await makeServerRequest("create-new-user", {username: "MyUsername", password: "MyPassword1234", name: "My Name"})
+            await makeServerRequest()
+            let returned = await makeServerRequest("create-new-user", 
+            {username: "MyUsername", password: "MyPassword1234", name: "My Name"})
             // console.log prints to the Inspect Element console. (Use CTRL+SHIFT+I on site to see)
             console.log("Returned JSON: " + JSON.stringify(returned))  // JSON.stringify turns a JSON object into a string
             if(returned.success == true){
