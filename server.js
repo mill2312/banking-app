@@ -108,9 +108,9 @@ app.get("/home", function(req,res){
     Not implemented yet, but /login should go here
   */
 })
-// https://docs.google.com/document/d/1e9s9r5Pgr8ZN5dboi88qjAtcl5HRmjKyGr_VkoZ1sQ8/edit
-
-// https://github.com/louischatriot/nedb?tab=readme-ov-file#updating-documents
+// https://docs.google.com/document/d/1e9s9r5Pgr8ZN5dboi88qjAtcl5HRmjKyGr_VkoZ1sQ8/edit Input/Output JSON document
+// https://www.w3schools.com/js/js_cookies.asp Cookies
+// https://github.com/louischatriot/nedb?tab=readme-ov-file#updating-documents NeDB library reference
 
 app.post("/endpoint/sign-in", function(req,res){
   let requestJson = req.body
