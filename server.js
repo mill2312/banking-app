@@ -176,7 +176,7 @@ app.post("/endpoint/login-user", function(req,res){
       res.json({success: false})
       res.end()
     }
-    console.log("test")
+    //console.log("test")
   })
   return
 })
@@ -205,6 +205,7 @@ app.post("/endpoint/create-new-user", function(req,res){
 
   // If user document does not exist, create it
 
+  //userDb.exist({})
 
   usersDb.findOne({username: requestJson.username}, function(err,doc){  
     if(err){throw new Error("Error in checking if username already exists")}
