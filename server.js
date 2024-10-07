@@ -76,7 +76,7 @@ app.get("/", function(req,res){
   */
   res.send(`
     Hello World!!!<br>
-    <a href="/signup">Login Page</a>
+    <a href="/login">Login Page</a>
   `)
   res.end() // End response
 })
