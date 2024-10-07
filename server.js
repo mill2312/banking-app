@@ -1,3 +1,4 @@
+const { v4: uuidv4 } = require('uuid');
 /*
   https://expressjs.com/en/starter/hello-world.html
 
@@ -119,12 +120,31 @@ app.post("/endpoint/sign-in", function(req,res){
 
   // get session id and store it to user in database
   usersDb.findOne({username: requestJson.username, password: requestJson.password}, function(err,doc){  
-
   })
+
+  //Generates Session ID
+  const sessionID = generateSessionId();
+
+  //Adds Session ID to User Object
+  usersDb.update(
+    { username: requestJson.username },
+    { $set: { sessionId: sessionId } },
+    function(updateErr) {
+      if (updateErr) {
+        console.error("Failed to update session ID:", updateErr);
+        return res.status(500).json({ error: "Could not create session" });
+      }
+
+      // Respond with the session ID
+      res.status(200).json({ message: "Signed in successfully", sessionId: sessionId });
+    }
+  );
+});
+  
 
   // res.json({success: false})
   // res.end()
-})
+
 
 
 // Josh will work on this
@@ -187,3 +207,9 @@ app.post("/endpoint/create-new-user", function(req,res){
 
 // Our client functions
 app.use(express.static('static'))
+
+
+//Helper function to generate SessionID:
+function generateSessionId() {
+  return Math.floor(100000000 + Math.random() * 900000000).toString(); // Generates a 9-digit random number as a string
+}
