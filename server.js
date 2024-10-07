@@ -88,7 +88,7 @@ app.get("/signup", function(req,res){
   */
   //console.log("In signup"); //true
   res.send(fs.readFileSync("./websites/signup-page.html", "utf-8"))
-  console.log("here"); //also true. This is just temporary
+  //console.log("here"); //also true. This is just temporary
   res.end() // End response.
 })
 
@@ -158,6 +158,27 @@ app.post("/endpoint/request", function(req,res){
   let requestJson = req.body
   console.log(requestJson)
 
+})
+
+
+app.post("/endpoint/login-user", function(req,res){
+  console.log("Signing In");
+  let requestJson = req.body
+  console.log(requestJson);
+  usersDb.findOne({username: requestJson.username}, function(err,doc){ 
+    if (doc) {
+      console.log("success")
+      res.json({success: true})
+      res.end()
+    }
+    else {
+      console.log("failure");
+      res.json({success: false})
+      res.end()
+    }
+    console.log("test")
+  })
+  return
 })
 
 
