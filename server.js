@@ -98,7 +98,7 @@ app.get("/login", function(req,res){
 })
 
 
-app.get("/payments", function(req,res){
+app.get("/payment-page", function(req,res){
   res.send(fs.readFileSync("./websites/payment-page.html", "utf-8"))
   res.end() // End response
 })
