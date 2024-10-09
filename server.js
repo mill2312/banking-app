@@ -113,6 +113,11 @@ app.get("/home", function(req,res){
 // https://www.w3schools.com/js/js_cookies.asp Cookies
 // https://github.com/louischatriot/nedb?tab=readme-ov-file#updating-documents NeDB library reference
 
+/**
+ * Sign In
+ * Input: {username, password}
+ * Output: {success, message, sessionId}
+ */
 app.post("/endpoint/sign-in", function(req,res){
   let requestJson = req.body
   console.log(requestJson)
@@ -123,7 +128,7 @@ app.post("/endpoint/sign-in", function(req,res){
   })
 
   //Generates Session ID
-  const sessionID = generateSessionId();
+  const sessionId = generateSessionId();
 
   //Adds Session ID to User Object
   usersDb.update(
@@ -132,11 +137,11 @@ app.post("/endpoint/sign-in", function(req,res){
     function(updateErr) {
       if (updateErr) {
         console.error("Failed to update session ID:", updateErr);
-        return res.status(500).json({ error: "Could not create session" });
+        return res.status(500).json({success: false, message: "Could not create session" });
       }
 
       // Respond with the session ID
-      res.status(200).json({ message: "Signed in successfully", sessionId: sessionId });
+      res.status(200).json({success: true, message: "Signed in successfully", sessionId: sessionId });
     }
   );
 });
@@ -148,11 +153,71 @@ app.post("/endpoint/sign-in", function(req,res){
 
 
 // Josh will work on this
+// Accepts 'toUsername' 'sessionId'  'amount'
+// payments db format {sender, receiver, time, requestApproved, amount}
+
+/**
+ * Pay Another User
+ * Input: {toUsername, sessionId, amount}
+ * Output: {success, transactionId}
+ */
 app.post("/endpoint/pay", function(req,res){
   let requestJson = req.body
   console.log(requestJson)
 
+  // Validate
+
+  if(validation.pay.validate(requestJson).error){
+    res.json({
+      success: false,
+      message: validation.pay.validate(requestJson).error.message
+    })
+    return
+  }
+
+  // Get the User's ID by their Session ID
+
+  usersDb.findOne({sessionId: requestJson.sessionId}, function(senderErr,senderDoc){
+    if(senderErr){res.json({success: false, message: "Error in getting sender info"})}
+    let senderId = senderDoc._id
+
+    // Get the Reciever's ID by their username
+
+    usersDb.findOne({username: requestJson.toUsername}, function(recieverErr,recieverDoc){
+      if(recieverErr){res.json({success: false, message: "Error in getting reciever info"})}
+      let recieverId = recieverDoc._id
+
+      // Now add this transaction to the database
+
+      addPaymentToDb(senderId, recieverId, requestJson.amount, true, function(err, doc){
+        if(err){res.json({success: false, message: "Error in adding the payment to the database"})}
+        res.json({success: true, transactionId: doc._id})
+      })
+    })
+  })
+
+
 })
+
+// Get Transaction by ID POST
+
+/**
+ * Adds a payment to the database.
+ * @param {string} senderId _id of Sender
+ * @param {string} recieverId _id of Reciever
+ * @param {number} amount Amount to pay the reciever
+ * @param {boolean} approved Has this transaction gone through?
+ * @param {function(err, doc)} callback Function callback
+ */
+function addPaymentToDb(senderId, recieverId, amount, approved, callback){
+  paymentsDb.insert({
+    sender: senderId,
+    reciever: recieverId,
+    amount: amount,
+    time: Date.now(),
+    requestApproved: approved
+  }, callback)
+}
 
 app.post("/endpoint/request", function(req,res){
   let requestJson = req.body
