@@ -9,7 +9,6 @@ const Joi = require("joi")
 
 module.exports = {
 
-    // create-new-user JSON
     createNewUser: Joi.object({
         username: Joi.string().alphanum().min(3).max(30).required(),
         password: Joi.string().required(),
@@ -19,6 +18,12 @@ module.exports = {
     pay: Joi.object({
         toUsername: Joi.string().required(),
         sessionId: Joi.number().required(),
-        amount: Joi.number().required().multiple(0.01)
+        amount: Joi.number().required().multiple(0.01).greater(0)
+    }),
+
+    request: Joi.object({
+        fromUsername: Joi.string().required(),
+        sessionId: Joi.number().required(),
+        amount: Joi.number().required().multiple(0.01).less(0)
     })
 }

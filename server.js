@@ -56,8 +56,31 @@ const fs = require("fs") // File System (allows us to read files)
 const express = require('express') // Express local server-hosting library
 const validation = require("./server-input-validation")
 const Datastore = require("nedb") // Persistent File Database:  https://www.npmjs.com/package/nedb
+
+/**
+ * Contains user account information.
+ * - _id     (unique)
+ * - name         Full name of user
+ * - username     Username
+ * - password     Password
+ * - sessionId    Session ID user's browser has stored in cookie
+ *                which is used for requests (rather than a username
+ *                which could be spoofed)
+ */
 var usersDb = new Datastore({filename: "./userData.db", autoload: true})
-var paymentsDb = new Datastore({filename: "./payments.db", autoloda: true})
+
+/**
+ * Contains transaction information (for payments and requests)
+ * - _id          (unique)
+ * - senderId     _id of sender in userData.db
+ * - recieverId   _id of reciever in userData.db  (the account targeted by amount)
+ * - time         epoch time
+ * - amount       Amount of money (negative = request for money, positive = send money)
+ * - approved     Has this transaction been applied to the recievers account?
+ */
+var paymentsDb = new Datastore({filename: "./payments.db", autoload: true})
+
+
 const app = express()
 app.use(express.json())
 const port = 3000
@@ -159,6 +182,7 @@ app.post("/endpoint/sign-in", function(req,res){
 /**
  * Pay Another User
  * Input: {toUsername, sessionId, amount}
+ *                                  ^ positive number
  * Output: {success, transactionId}
  */
 app.post("/endpoint/pay", function(req,res){
@@ -187,7 +211,10 @@ app.post("/endpoint/pay", function(req,res){
       if(recieverErr){res.json({success: false, message: "Error in getting reciever info"})}
       let recieverId = recieverDoc._id
 
-      // Now add this transaction to the database
+      /*
+        Now add this transaction to the database.
+        We approve the payment immediately since it is user-initiated.
+      */
 
       addPaymentToDb(senderId, recieverId, requestJson.amount, true, function(err, doc){
         if(err){res.json({success: false, message: "Error in adding the payment to the database"})}
@@ -195,11 +222,10 @@ app.post("/endpoint/pay", function(req,res){
       })
     })
   })
-
-
 })
 
-// Get Transaction by ID POST
+// TODO: Get Transaction by ID POST
+// TODO: Approve someone's request for money POST
 
 /**
  * Adds a payment to the database.
@@ -211,17 +237,62 @@ app.post("/endpoint/pay", function(req,res){
  */
 function addPaymentToDb(senderId, recieverId, amount, approved, callback){
   paymentsDb.insert({
-    sender: senderId,
-    reciever: recieverId,
+    senderId: senderId,
+    recieverId: recieverId,
     amount: amount,
     time: Date.now(),
-    requestApproved: approved
+    approved: approved
   }, callback)
 }
 
+/**
+ * Request Money From Another User
+ * Input: {fromUsername, sessionId, amount}
+ *                                       ^ negative number
+ * Output: {success, transactionId}
+ * 
+ * Note: The sender is sending debt to the recieving user, so the
+ * sender's balance will go up when approved and the
+ * reciever's balance will go down.
+ */
 app.post("/endpoint/request", function(req,res){
   let requestJson = req.body
   console.log(requestJson)
+
+  // Validate
+
+  if(validation.request.validate(requestJson).error){
+    res.json({
+      success: false,
+      message: validation.request.validate(requestJson).error.message
+    })
+    return
+  }
+
+  // Get the User's ID by their Session ID
+
+  usersDb.findOne({sessionId: requestJson.sessionId}, function(senderErr,senderDoc){
+    if(senderErr){res.json({success: false, message: "Error in getting sender info"})}
+    let senderId = senderDoc._id
+
+    // Get the Reciever's ID by their username
+
+    usersDb.findOne({username: requestJson.fromUsername}, function(recieverErr,recieverDoc){
+      if(recieverErr){res.json({success: false, message: "Error in getting reciever info"})}
+      let recieverId = recieverDoc._id
+
+      /*
+        Add transaction to database, but do NOT approve immediately.
+        The sender is sending debt to the recieving user, so the recieving
+        user must be able to deny the request from the sender.
+      */
+
+      addPaymentToDb(senderId, recieverId, requestJson.amount, false, function(err, doc){
+        if(err){res.json({success: false, message: "Error in adding the payment to the database"})}
+        res.json({success: true, transactionId: doc._id})
+      })
+    })
+  })
 
 })
 
