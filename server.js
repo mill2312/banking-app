@@ -296,7 +296,8 @@ app.post("/endpoint/request", function(req,res){
 
 })
 
-
+// Josh: whats the difference between this endpoint and "sign-in" endpoint. Could
+// probably combine it into the sign-in endpoint, but I could be wrong
 app.post("/endpoint/login-user", function(req,res){
   console.log("Signing In");
   let requestJson = req.body
