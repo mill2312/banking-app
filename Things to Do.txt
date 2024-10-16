@@ -1,0 +1,3 @@
+Consider adding:
+- admin approval for payments over a certain dollar threshold
+- applying a certain fee on payments (percentage or fixed amount)
