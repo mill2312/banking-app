@@ -147,8 +147,8 @@ app.post("/endpoint/sign-in", function(req,res){
   // recieve username and password
 
   // get session id and store it to user in database
-  usersDb.findOne({username: requestJson.username, password: requestJson.password}, function(err,doc){  
-  })
+  // usersDb.findOne({username: requestJson.username, password: requestJson.password}, function(err,doc){  
+  // })
 
   //Generates Session ID
   const sessionId = generateSessionId();

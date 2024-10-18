@@ -37,6 +37,8 @@ async function makeServerRequest(endpoint, json){
 //**********************
 // Cookie Functions
 //**********************
+// "sessionId=aoisdfhuwia"
+// setCookie("sessionId", )
 
 function setCookie(cname, cvalue, exdays) {
     const d = new Date();
