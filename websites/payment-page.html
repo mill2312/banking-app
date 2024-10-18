@@ -16,4 +16,20 @@
     Amount: <input><br>
     <button>Request</button>
 </body>
+<script src="/client-functions.js"></script>
+
+<script> 
+    async function setUserName() {
+        var usernameElement = document.getElementById("username")
+        var sessionId = getCookie("sessionId")
+        //wait()
+
+        let returned = await makeServerRequest("get-user-info",{sessionId : sessionId})
+        console.log(returned)
+    }
+
+
+    setUserName()
+     
+</script>
 
