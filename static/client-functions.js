@@ -38,7 +38,9 @@ async function makeServerRequest(endpoint, json){
 // Cookie Functions
 //**********************
 // "sessionId=aoisdfhuwia"
-// setCookie("sessionId", )
+// setCookie("sessionId", returned.sessionId)
+// new Date(Date.now() + 60*60*1000)
+// sessionId="oaiejgoiwjaf";
 
 function setCookie(cname, cvalue, exdays) {
     const d = new Date();
@@ -47,20 +49,20 @@ function setCookie(cname, cvalue, exdays) {
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
   }
   
-  function getCookie(cname) {
-    let name = cname + "=";
-    let ca = document.cookie.split(';');
-    for(let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
+function getCookie(cname) {
+let name = cname + "=";
+let ca = document.cookie.split(';');
+for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+    c = c.substring(1);
     }
-    return "";
-  }
+    if (c.indexOf(name) == 0) {
+    return c.substring(name.length, c.length);
+    }
+}
+return "";
+}
   
   function checkCookie() {
     let user = getCookie("username");
