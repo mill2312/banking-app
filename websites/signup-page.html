@@ -57,7 +57,9 @@
             console.log("Returned JSON: " + JSON.stringify(returned))  // JSON.stringify turns a JSON object into a string
             if(returned.success == true){
                 console.log("Success!")
-                window.location.href = "/payment-page"
+                
+
+                window.location.href = "/login"
                 // Log In the user now
             } else {
                 console.log("Failure!")
