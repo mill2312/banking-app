@@ -1,0 +1,33 @@
+........................................
+      Group Participation Report
+........................................
+Fill out what you've done in the Project.
+I've started it off for us.
+
+Joshua Miller
+=====================
+- Created GitHub
+- Set up ExpressJS to serevr home site and login page on server.js
+- Added makeServerRequest client functions to interact with endpoints
+- createNewUser endpoint
+- set up request validation
+- serve paymentPage
+
+
+Aaron Weeks
+=====================
+- Validated client side functionality for log in and sign in page
+
+
+Alex Hanzlicek
+=====================
+- Set up login page functionality (HTML/JS)
+- Set up sign up page functionality
+
+
+
+
+Nayib Griffith
+=====================
+- Created the sign in endpoint functionality, with automatically generated session Ids.
+
