@@ -28,10 +28,12 @@
         console.log(returned)
     }
 
-    logout-button.addEventListener("click", function(){
+    const logoutButton = document.getElementById("logout-button");
+
+    logoutbutton.addEventListener("click", function(){
             console.log("Logging Out");
             //app.get("/login", function(req,res)
-            window.location.href = "/login"
+            window.location.href = "/log-out"
         });
 
     setUserName()
