@@ -168,6 +168,20 @@ app.post("/endpoint/sign-in", function(req,res){
     }
   );
 });
+
+/**
+ * Log out the user by destroying their sessionId
+ * Input: {sessionId}
+ * Output: {success, message}
+ */
+app.post("/endpoint/log-out", function(req,res){
+  let requestJson = req.body
+  console.log(requestJson)
+
+
+})
+
+
   
 
   // res.json({success: false})
@@ -244,6 +258,7 @@ function addPaymentToDb(senderId, recieverId, amount, approved, callback){
     approved: approved
   }, callback)
 }
+
 
 /**
  * Request Money From Another User
