@@ -164,20 +164,10 @@ app.post("/endpoint/sign-in", function(req,res){
 app.post("/endpoint/log-out", function(req,res){
   let requestJson = req.body
   console.log(requestJson)
-
+  
+  // Nayib
 
 })
-
-
-
-  // res.json({success: false})
-  // res.end()
-
-
-
-// Josh will work on this
-// Accepts 'toUsername' 'sessionId'  'amount'
-// payments db format {sender, receiver, time, requestApproved, amount}
 
 /**
  * Pay Another User
