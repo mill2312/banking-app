@@ -243,6 +243,20 @@ function addPaymentToDb(senderId, recieverId, amount, approved, callback){
     time: Date.now(),
     approved: approved
   }, callback)
+
+  // We want to update the recieving user's balance if it is
+  // initially approved.
+  if(approved == true){
+    usersDb.findOne({_id: recieverId}, function(err,doc){
+      if(err){throw new Error("Unexpected error. The recieverId should be valid since we checked it.")}
+      /** The current balance of the user */
+      let currentBalance = doc.balance 
+      usersDb.update({_id: recieverId}, {$set: {balance: currentBalance + amount}}, function(err,n){
+        if(err){throw new Error("Unexpected error - could not update balance of user.")}
+        
+      })
+    })
+  }
 }
 
 
