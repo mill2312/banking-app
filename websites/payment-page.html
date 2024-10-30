@@ -4,7 +4,7 @@
 </head>
 <body>
     You are logged in as <span id="username" style="font-weight: bold;">username</span>
-    <button>Log Out</button>
+    <button id="logout-button">Log Out</button>
     <br>
     <h1>Payments</h1><br>
     Send to User<br>
@@ -28,6 +28,11 @@
         console.log(returned)
     }
 
+    logout-button.addEventListener("click", function(){
+            console.log("Logging Out");
+            //app.get("/login", function(req,res)
+            window.location.href = "/login"
+        });
 
     setUserName()
      
