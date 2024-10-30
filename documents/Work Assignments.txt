@@ -45,7 +45,32 @@ Wed, Nov 6
         transaction with the ability to
         cancel a request). Just HTML/CSS
 
-
+Fri, Nov 8
+...........
+    - JOSH & ALEX: Create Accept or
+        Deny Requests for Payments
+        inptus and functionality
+    - NAYIB & AARON: Improve the overall
+        appearance of the webpages
 ........................................
                 Week 3
 ........................................
+
+Wed, Nov 13
+...........
+    - JOSH & AARON: Work on slides, part
+        A and B (project description
+        requirements we implemented)
+    - ALEX & NAYIB: Record video demo of
+        the project, showing the
+        corresponding requirements.
+
+Fri, Nov 15
+...........
+    - ALL: Work on Slides, adding your
+        experience of working in the
+        group.
+    - JOSH: Create installation
+        instructions.
+    - AARON: Compile Group 
+        Participation report.
