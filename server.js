@@ -182,7 +182,6 @@ app.post("/endpoint/log-out", function(req,res){
 })
 
 
-  
 
   // res.json({success: false})
   // res.end()
@@ -312,6 +311,7 @@ app.post("/endpoint/request", function(req,res){
 })
 
 /**
+ * Gets the username and balance of the user
  * Input: {sessionId}
  * Output: {username}
  */
@@ -383,9 +383,10 @@ app.post("/endpoint/create-new-user", function(req,res){
       console.log("Found result")  
     if(!doc){
       usersDb.insert({
-        name: requestJson.name,
+        // name: requestJson.name,
         username: requestJson.username,
-        password: requestJson.password
+        password: requestJson.password,
+        balance: 0,
       })
       console.log("Success")
       res.json({success: true})
@@ -397,6 +398,13 @@ app.post("/endpoint/create-new-user", function(req,res){
     }
   })
 })
+
+// usersDb.update({}, {$set: {balance: 50}}, {multi: true}, function(err, n){
+//   console.log(`${n} users' balances were updated to 50 (USD)`)
+//   if(err){
+//     throw new Error(err.message)
+//   }
+// })
 
 // Our client functions
 app.use(express.static('static'))
