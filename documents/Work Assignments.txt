@@ -1,0 +1,51 @@
+........................................
+                Week 1
+........................................
+Mon, Oct 28
+...........
+    - JOSH: Participation log in GitHub
+        for tracking
+
+Wed, Oct 30
+...........
+    - JOSH: Show User Balance endpoint
+        through sessionId
+    - NAYIB: Create Log Out endpoint
+        that destroys sessionId
+    - ALEX & AARON: Create input and
+        functionality for Log Out on
+        payment page
+
+Fri, Nov 1
+...........
+    - JOSH: Create '/admin' webpage with
+        authentification
+    - NAYIB: Create endpoint to show the
+        10 most recent transactions (for
+        the '/admin' webpage)
+    - ALEX: Create Send Payment inputs
+        and functionality
+
+........................................
+                Week 2
+........................................
+
+Wed, Nov 6
+...........
+    - JOSH: Accept/Deny Payment Request
+        endpoint
+    - NAYIB: Get Requests (payment
+        requests for logged in user)
+        endpoint
+    - ALEX: Create Request Payment
+        inputs and functionality
+    - AARON: Create a template for the
+        Payment inspector page (which
+        shows details about one
+        transaction with the ability to
+        cancel a request). Just HTML/CSS
+
+
+........................................
+                Week 3
+........................................
