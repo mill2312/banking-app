@@ -327,32 +327,6 @@ app.post("/endpoint/get-user-info", function(req,res){
   })
 })
 
-
-// Josh: whats the difference between this endpoint and "sign-in" endpoint. Could
-// probably combine it into the sign-in endpoint, but I could be wrong
-
-/* 
-  app.post("/endpoint/login-user", function(req,res){
-  console.log("Signing In");
-  let requestJson = req.body
-  console.log(requestJson);
-  usersDb.findOne({username: requestJson.username}, function(err,doc){ 
-    if (doc) {
-      console.log("success")
-      res.json({success: true})
-      res.end()
-    }
-    else {
-      console.log("failure");
-      res.json({success: false})
-      res.end()
-    }
-    //console.log("test")
-  })
-  return
-})
- */
-
 /**
  * Request to this endpoint must have:
  * username : string
