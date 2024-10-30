@@ -1,3 +1,6 @@
+Contains user account information.
+................................................................................
+
 name            Name of the user (not currently used for anything)
 
 username        Username of user, created at sign up

@@ -58,25 +58,12 @@ const validation = require("./server-input-validation")
 const Datastore = require("nedb") // Persistent File Database:  https://www.npmjs.com/package/nedb
 
 /**
- * Contains user account information.
- * - _id     (unique)
- * - name         Full name of user
- * - username     Username
- * - password     Password
- * - sessionId    Session ID user's browser has stored in cookie
- *                which is used for requests (rather than a username
- *                which could be spoofed)
+ * See userData.description for info about properties
  */
 var usersDb = new Datastore({filename: "./datastores/userData.db", autoload: true})
 
 /**
- * Contains transaction information (for payments and requests)
- * - _id          (unique)
- * - senderId     _id of sender in userData.db
- * - recieverId   _id of reciever in userData.db  (the account targeted by amount)
- * - time         epoch time
- * - amount       Amount of money (negative = request for money, positive = send money)
- * - approved     Has this transaction been applied to the recievers account?
+ * See payments.description for info about properties
  */
 var paymentsDb = new Datastore({filename: "./datastores/payments.db", autoload: true})
 
