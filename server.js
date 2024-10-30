@@ -142,6 +142,16 @@ app.post("/endpoint/sign-in", function(req,res){
   // password: requestJson.password}, function(err,doc){  
   // })
 
+  // Validate that the JSON is correct
+
+  if(validation.signIn.validate(requestJson).error){
+    res.json({
+      success: false,
+      message: validation.signIn.validate(requestJson).error.message
+    })
+    return
+  }
+
   //Generates Session ID
   const sessionId = generateSessionId();
 
@@ -320,6 +330,16 @@ app.post("/endpoint/get-user-info", function(req,res){
 
   let requestJson = req.body
   console.log(requestJson)
+
+  // Validate that it is correct
+  
+  if(validation.getUserInfo.validate(requestJson).error){
+    res.json({
+      success: false,
+      message: validation.getUserInfo.validate(requestJson).error.message
+    })
+    return
+  }
 
   usersDb.findOne({sessionId: requestJson.sessionId}, function(err,doc){
     if(err){res.json({success: false, message: err.message});return;}

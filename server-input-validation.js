@@ -25,5 +25,14 @@ module.exports = {
         fromUsername: Joi.string().required(),
         sessionId: Joi.number().required(),
         amount: Joi.number().required().multiple(0.01).less(0)
+    }),
+
+    getUserInfo: Joi.object({
+        sessionId: Joi.string().required()
+    }),
+
+    signIn: Joi.object({
+        username: Joi.string().required(),
+        password: Joi.string().required()
     })
 }
