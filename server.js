@@ -119,9 +119,13 @@ app.get("/home", function(req,res){
     Not implemented yet, but /login should go here
   */
 })
-// https://docs.google.com/document/d/1e9s9r5Pgr8ZN5dboi88qjAtcl5HRmjKyGr_VkoZ1sQ8/edit Input/Output JSON document
-// https://www.w3schools.com/js/js_cookies.asp Cookies
-// https://github.com/louischatriot/nedb?tab=readme-ov-file#updating-documents NeDB library reference
+
+// Input/Output JSON document
+// https://docs.google.com/document/d/1e9s9r5Pgr8ZN5dboi88qjAtcl5HRmjKyGr_VkoZ1sQ8/edit
+// Cookies
+// https://www.w3schools.com/js/js_cookies.asp
+// NeDB library reference
+// https://github.com/louischatriot/nedb?tab=readme-ov-file#updating-documents
 
 /**
  * Sign In
@@ -134,7 +138,8 @@ app.post("/endpoint/sign-in", function(req,res){
   // recieve username and password
 
   // get session id and store it to user in database
-  // usersDb.findOne({username: requestJson.username, password: requestJson.password}, function(err,doc){  
+  // usersDb.findOne({username: requestJson.username, 
+  // password: requestJson.password}, function(err,doc){  
   // })
 
   //Generates Session ID
@@ -151,7 +156,12 @@ app.post("/endpoint/sign-in", function(req,res){
       }
 
       // Respond with the session ID
-      res.status(200).json({success: true, message: "Signed in successfully", sessionId: sessionId });
+      res.status(200).json(
+        {
+          success: true, 
+          message: "Signed in successfully", 
+          sessionId: sessionId 
+        });
     }
   );
 });
@@ -239,10 +249,11 @@ function addPaymentToDb(senderId, recieverId, amount, approved, callback){
   // initially approved.
   if(approved == true){
     usersDb.findOne({_id: recieverId}, function(err,doc){
-      if(err){throw new Error("Unexpected error. The recieverId should be valid since we checked it.")}
+      if(err){throw new Error("Unexpected error. The recieverId should be valid.")}
       /** The current balance of the user */
       let currentBalance = doc.balance 
-      usersDb.update({_id: recieverId}, {$set: {balance: currentBalance + amount}}, function(err,n){
+      usersDb.update({_id: recieverId}, 
+        {$set: {balance: currentBalance + amount}}, function(err,n){
         if(err){throw new Error("Unexpected error - could not update balance of user.")}
       })
     })
@@ -363,6 +374,7 @@ app.post("/endpoint/create-new-user", function(req,res){
   })
 })
 
+// Give all users a balance of 50.
 // usersDb.update({}, {$set: {balance: 50}}, {multi: true}, function(err, n){
 //   console.log(`${n} users' balances were updated to 50 (USD)`)
 //   if(err){
@@ -376,5 +388,6 @@ app.use(express.static('static'))
 
 //Helper function to generate SessionID:
 function generateSessionId() {
-  return Math.floor(100000000 + Math.random() * 900000000).toString(); // Generates a 9-digit random number as a string
+  // Generates a 9-digit random number as a string
+  return Math.floor(100000000 + Math.random() * 900000000).toString(); 
 }
