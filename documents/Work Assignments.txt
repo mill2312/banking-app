@@ -45,6 +45,7 @@ Wed, Nov 6
         transaction with the ability to
         cancel a request). Just HTML/CSS
 
+<<<<<<< HEAD
 Fri, Nov 8
 ...........
     - JOSH & ALEX: Create Accept or
@@ -74,3 +75,9 @@ Fri, Nov 15
         instructions.
     - AARON: Compile Group 
         Participation report.
+=======
+
+........................................
+                Week 3
+........................................
+>>>>>>> 505c3c4 (work assignments for week 1 and 2)
