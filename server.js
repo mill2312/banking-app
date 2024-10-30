@@ -228,7 +228,8 @@ app.post("/endpoint/pay", function(req,res){
 // TODO: Approve someone's request for money POST
 
 /**
- * Adds a payment to the database.
+ * Adds a payment to the database. If approved=true, 
+ * it updates the user's balance too.
  * @param {string} senderId _id of Sender
  * @param {string} recieverId _id of Reciever
  * @param {number} amount Amount to pay the reciever
@@ -253,12 +254,10 @@ function addPaymentToDb(senderId, recieverId, amount, approved, callback){
       let currentBalance = doc.balance 
       usersDb.update({_id: recieverId}, {$set: {balance: currentBalance + amount}}, function(err,n){
         if(err){throw new Error("Unexpected error - could not update balance of user.")}
-        
       })
     })
   }
 }
-
 
 /**
  * Request Money From Another User
