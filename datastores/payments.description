@@ -1,0 +1,23 @@
+name            Name of the user (not currently used for anything)
+
+senderId        _id of user in userData.db that sent this payment/debt
+
+recieverId      _id of user that shall recieve the payment/debt if approved
+                Sending someone else money approves immediately.
+                Requesting money from someone does not (debt-recieving user
+                must approve it)
+
+amount          Amount of money (positive or negative) being sent from the
+                sending user to the receiving user. 
+
+time            The time the payment initialy created, represented as
+                an epoch timestamp using Date.now(). This stores the
+                time as a number, and can be converted back to a date
+                with new Date(epoch).
+
+approved        Was the transaction approved and added/subtracted from the
+                recieving user's account balance?
+                (Note: When approved is switched to true, or initialized at true,
+                the users balance must update by applying the amount (pos/neg). 
+                When/if it is set to false, the users balance must update by 
+                reversing the payment.)
