@@ -1,0 +1,18 @@
+name            Name of the user (not currently used for anything)
+
+username        Username of user, created at sign up
+
+password        Password of user, created at sign up
+
+sessionId       Session ID of user, used in requests from client to
+                authenticate the user to do privileged requests (like
+                sending money to someone), rather than directly sending
+                username and password. Destroyed at log out.
+
+balance         The current balance of the user. Does not include
+                unaccepted/undenied payments requests from someone else
+
+_id             AUTOMATICALLY ADDED BY NeDB, used to reference the user
+                    Used heavily on server.js, rather than username. We don't
+                    want to disassociate all a user's payments if they were to
+                    change their username, for example. 

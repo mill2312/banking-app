@@ -67,7 +67,7 @@ const Datastore = require("nedb") // Persistent File Database:  https://www.npmj
  *                which is used for requests (rather than a username
  *                which could be spoofed)
  */
-var usersDb = new Datastore({filename: "./userData.db", autoload: true})
+var usersDb = new Datastore({filename: "./datastores/userData.db", autoload: true})
 
 /**
  * Contains transaction information (for payments and requests)
@@ -78,7 +78,7 @@ var usersDb = new Datastore({filename: "./userData.db", autoload: true})
  * - amount       Amount of money (negative = request for money, positive = send money)
  * - approved     Has this transaction been applied to the recievers account?
  */
-var paymentsDb = new Datastore({filename: "./payments.db", autoload: true})
+var paymentsDb = new Datastore({filename: "./datastores/payments.db", autoload: true})
 
 
 const app = express()
@@ -313,7 +313,7 @@ app.post("/endpoint/request", function(req,res){
 /**
  * Gets the username and balance of the user
  * Input: {sessionId}
- * Output: {username}
+ * Output: {username, balance}
  */
 app.post("/endpoint/get-user-info", function(req,res){
 
@@ -322,7 +322,7 @@ app.post("/endpoint/get-user-info", function(req,res){
 
   usersDb.findOne({sessionId: requestJson.sessionId}, function(err,doc){
     if(err){res.json({success: false, message: err.message});return;}
-    res.json({username: doc.username})
+    res.json({username: doc.username, balance: doc.balance})
     res.end()
   })
 })
