@@ -73,7 +73,7 @@ app.use(express.json())
 const port = 3000
 
 // Starts the server.
-var server = app.listen(port, function(){
+app.listen(port, function(){
   console.log("Example app listening on port " + port
     + "\n" + "Use [CTRL]+[C] to stop server."
   )
