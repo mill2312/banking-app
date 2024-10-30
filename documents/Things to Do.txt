@@ -2,6 +2,13 @@ Things we are currently missing:
     Money variable.
     username set as "usename", should be input.
 
+    Josh - note to self
+    ===================
+    Whenever a payment is voluntarily sent to someone by a sender, 
+    the balance of the recieving user should be updated.
+
+    Whenever a payment request (requesting from another person to pay you)
+    is sent, it should not be added to the balance until it is accepted.
 
 Consider adding:
 - admin approval for payments over a certain dollar threshold
