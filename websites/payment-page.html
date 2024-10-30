@@ -30,7 +30,7 @@
 
     const logoutButton = document.getElementById("logout-button");
 
-    logout-button.addEventListener("click", function(){
+    document.getElementbyID("logout-button").addEventListener("click", async function() {
             console.log("Logging Out");
             //app.get("/login", function(req,res)
             window.location.href = "/log-out"
