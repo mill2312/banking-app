@@ -25,6 +25,10 @@ Fri, Nov 1
         the '/admin' webpage)
     - ALEX: Create Send Payment inputs
         and functionality
+    - AARON: Using the endpoint, show the
+        logged in user's current balance
+        on payment page. ("get-user-info"
+        endpoint)
 
 ........................................
                 Week 2
