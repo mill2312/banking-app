@@ -8,9 +8,20 @@
     <br>
     <h1>Payments</h1><br>
     Send to User<br>
-    Username: <input><br>
-    Amount: <input><br>
-    <button>Send</button><br><br>
+
+    
+    <label for="username-input-send">Username</label>
+    <input id="username-input-send">
+
+    
+    <label for="amount-input-send">Amount</label>
+    <input id="amount-input-send">
+    
+    
+    <button id="send-button">Send</button>
+
+    <br>
+
     Request from User<br>
     Username: <input><br>
     Amount: <input><br>
@@ -34,6 +45,15 @@
             console.log("Logging Out");
             //app.get("/login", function(req,res)
             window.location.href = "/log-out"
+        });
+
+    setUserName()
+
+    document.getElementbyID("send-button").addEventListener("click", async function() {
+            console.log("Sening Money");
+            //app.get("/login", function(req,res)
+            //window.location.href = "/log-out"
+            sendMoney(document.getElementbyId("username"), document.getElementbyId("username-input-send"), document.getElementbyId("amount-input-send") )
         });
 
     setUserName()
