@@ -52,8 +52,7 @@
             let returned = await makeServerRequest("sign-in", 
             {
                 username: document.getElementById("username-input").value, 
-                password: document.getElementById("password-input").value, 
-                name: "My Name"
+                password: document.getElementById("password-input").value
             })
             // console.log prints to the Inspect Element console. (Use CTRL+SHIFT+I on site to see)
             console.log("Returned JSON: " + JSON.stringify(returned))  // JSON.stringify turns a JSON object into a string
@@ -64,8 +63,8 @@
                 // Log In the user now
             } else {
                 console.log("Failure!")
-                //alert(returned.message)
-                alert("This user does not exist");
+                alert(returned.message)
+                //alert("This user does not exist");
             }
         })
         /*

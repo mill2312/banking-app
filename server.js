@@ -136,6 +136,7 @@ app.get("/home", function(req,res){
  */
 app.post("/endpoint/sign-in", function(req,res){
   let requestJson = req.body
+  console.log("Sign In Request!")
   console.log(requestJson)
   // recieve username and password
 
@@ -168,12 +169,13 @@ app.post("/endpoint/sign-in", function(req,res){
       }
 
       // Respond with the session ID
-      res.status(200).json(
+      res.json(
         {
           success: true, 
           message: "Signed in successfully", 
           sessionId: sessionId 
         });
+      res.end()
     }
   );
 });
