@@ -415,3 +415,30 @@ function generateSessionId() {
   // Generates a 9-digit random number as a string
   return Math.floor(100000000 + Math.random() * 900000000).toString(); 
 }
+
+//Log out the user by destroying their sessionId
+app.post("/endpoint/log-out", function(req, res) {
+  let requestJson = req.body;
+  console.log("Log Out Request:", requestJson);
+
+  // Find the user with the given sessionId
+  usersDb.update(
+    { sessionId: requestJson.sessionId },
+    { $unset: { sessionId: "" } },
+    {},
+    function(err, numAffected) {
+      if (err) {
+        console.error("Error in logging out:", err);
+        return res.status(500).json({ success: false, message: "Failed to log out" });
+      }
+      
+      if (numAffected === 0) {
+        // No user with the sessionId was found
+        return res.json({ success: false, message: "Invalid session ID" });
+      }
+
+      // Successfully removed the sessionId
+      res.json({ success: true, message: "Logged out successfully" });
+    }
+  );
+});
