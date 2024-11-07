@@ -39,10 +39,15 @@
 // //<button id="logout-button">Log Out</button> earlier
 
     const logoutbutton = document.createElement("Button");
-
-
     logoutbutton.innerHTML = "Log Out";
     document.body.appendChild(logoutbutton);
+
+
+    const sendbutton = document.createElement("Button");
+    sendbutton.innerHTML = "Send Money";
+    document.body.appendChild(sendbutton);
+
+
     logoutbutton.addEventListener("click", function() {
         alert("signing out");
         window.location.href = "/login"
@@ -60,20 +65,34 @@
 
     const logoutButton = document.getElementById("logout-button");
 
-    document.getElementbyID("logout-button").addEventListener("click", function() {
-            console.log("Logging Out");
+   // document.getElementbyID("logout-button").addEventListener("click", function() {
+//        console.log("Logging Out");
             //app.get("/login", function(req,res)
-            window.location.href = "/log-out"
-        });
+            //window.location.href = "/log-out"
+       // });
 
     setUserName()
 
+    
+
+    sendbutton.addEventListener("click", function() {
+        //alert("here"); works
+        console.log("Sending Money");
+            //app.get("/login", function(req,res)
+            //window.location.href = "/log-out"
+            sendMoney(document.getElementbyId("username"), document.getElementbyId("username-input-send"), document.getElementbyId("amount-input-send") )
+
+    })
+
+
+    /*
     document.getElementbyID("send-button").addEventListener("click", async function() {
             console.log("Sening Money");
             //app.get("/login", function(req,res)
             //window.location.href = "/log-out"
             sendMoney(document.getElementbyId("username"), document.getElementbyId("username-input-send"), document.getElementbyId("amount-input-send") )
         });
+    */
 
     setUserName()
 
