@@ -4,7 +4,8 @@
 </head>
 <body>
     You are logged in as <span id="username" style="font-weight: bold;">username</span>
-    <button id="logout-button">Log Out</button>
+   
+
     <br>
     <h1>Payments</h1><br>
     Send to User<br>
@@ -26,10 +27,28 @@
     Username: <input><br>
     Amount: <input><br>
     <button>Request</button>
+
+    
+
+
 </body>
 <script src="/client-functions.js"></script>
 
 <script> 
+
+// //<button id="logout-button">Log Out</button> earlier
+
+    const logoutbutton = document.createElement("Button");
+
+
+    logoutbutton.innerHTML = "Log Out";
+    document.body.appendChild(logoutbutton);
+    logoutbutton.addEventListener("click", function() {
+        alert("signing out");
+        window.location.href = "/login"
+
+    })
+
     async function setUserName() {
         var usernameElement = document.getElementById("username")
         var sessionId = getCookie("sessionId")
@@ -41,7 +60,7 @@
 
     const logoutButton = document.getElementById("logout-button");
 
-    document.getElementbyID("logout-button").addEventListener("click", async function() {
+    document.getElementbyID("logout-button").addEventListener("click", function() {
             console.log("Logging Out");
             //app.get("/login", function(req,res)
             window.location.href = "/log-out"
