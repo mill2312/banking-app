@@ -180,18 +180,7 @@ app.post("/endpoint/sign-in", function(req,res){
   );
 });
 
-/**
- * Log out the user by destroying their sessionId
- * Input: {sessionId}
- * Output: {success, message}
- */
-app.post("/endpoint/log-out", function(req,res){
-  let requestJson = req.body
-  console.log(requestJson)
-  
-  // Nayib
 
-})
 
 /**
  * Pay Another User
@@ -347,6 +336,8 @@ app.post("/endpoint/get-user-info", function(req,res){
 
   usersDb.findOne({sessionId: requestJson.sessionId}, function(err,doc){
     if(err){res.json({success: false, message: err.message});return;}
+    // We return true because it successfully ensured the session Id does not exist anymore
+    if(doc == null){res.json({success: true, message: `SessionId ${requestJson.sesionId} is already not active`});return;}
     res.json({username: doc.username, balance: doc.balance})
     res.end()
   })
@@ -417,6 +408,11 @@ function generateSessionId() {
 }
 
 //Log out the user by destroying their sessionId
+/**
+ * Log out the user by destroying their sessionId
+ * Input: {sessionId}
+ * Output: {success, message}
+ */
 app.post("/endpoint/log-out", function(req, res) {
   let requestJson = req.body;
   console.log("Log Out Request:", requestJson);
@@ -432,13 +428,15 @@ app.post("/endpoint/log-out", function(req, res) {
         return res.status(500).json({ success: false, message: "Failed to log out" });
       }
       
-      if (numAffected === 0) {
-        // No user with the sessionId was found
-        return res.json({ success: false, message: "Invalid session ID" });
-      }
+      // We just want to ensure they are logged out
+      // if (numAffected === 0) {
+      //   // No user with the sessionId was found
+      //   return res.json({ success: false, message: "Invalid session ID" });
+      // }
 
       // Successfully removed the sessionId
       res.json({ success: true, message: "Logged out successfully" });
+      res.end()
     }
   );
 });

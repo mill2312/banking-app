@@ -50,8 +50,8 @@
 
     logoutButton.addEventListener("click", async function() {
         alert("signing out");
-        var sessionId = getCookie("sessionId")
-        let result = await makeServerRequest("log-out", {sessionId: sessionId})
+        var sessionIdValue = getCookie("sessionId")
+        let result = await makeServerRequest("log-out", {sessionId: sessionIdValue})
         if(result.success == true){
             window.location.href = "/login"
         } else {
