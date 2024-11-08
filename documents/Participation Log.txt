@@ -23,6 +23,7 @@ Alex Hanzlicek
 =====================
 - Set up login page functionality (HTML/JS)
 - Set up sign up page functionality
+- Set up Logout Button Functionality
 
 
 
