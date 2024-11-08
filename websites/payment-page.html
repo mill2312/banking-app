@@ -43,10 +43,10 @@
 
     var logoutButton = document.getElementById("logout-button")
 
-
-    const sendbutton = document.createElement("Button");
-    sendbutton.innerHTML = "Send Money";
-    document.body.appendChild(sendbutton);
+    const sendButton = document.getElementById("send-button")
+    
+    //sendbutton.innerHTML = "Send Money";
+    //document.body.appendChild(sendbutton);
 
     logoutButton.addEventListener("click", async function() {
         alert("signing out");
@@ -79,12 +79,12 @@
 
     
 
-    sendbutton.addEventListener("click", function() {
+    sendButton.addEventListener("click", function() {
         //alert("here"); works
         console.log("Sending Money");
             //app.get("/login", function(req,res)
             //window.location.href = "/log-out"
-            sendMoney(document.getElementbyId("username"), document.getElementbyId("username-input-send"), document.getElementbyId("amount-input-send") )
+            sendMoney(document.getElementById("send-button"), document.getElementById("username-input-send"), document.getElementById("amount-input-send") )
 
     })
 
