@@ -15,6 +15,7 @@
     <label for="username-input-send">Username</label>
     <input id="username-input-send">
 
+
     
     <label for="amount-input-send">Amount</label>
     <input id="amount-input-send">
@@ -48,7 +49,7 @@
     document.body.appendChild(sendbutton);
 
 
-    logoutbutton.addEventListener("click", function() {
+    logoutButton.addEventListener("click", function() {
         alert("signing out");
         window.location.href = "/login"
 
@@ -63,7 +64,7 @@
         console.log(returned)
     }
 
-    const logoutButton = document.getElementById("logout-button");
+    
 
    // document.getElementbyID("logout-button").addEventListener("click", function() {
 //        console.log("Logging Out");
