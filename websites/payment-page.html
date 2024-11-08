@@ -48,10 +48,15 @@
     sendbutton.innerHTML = "Send Money";
     document.body.appendChild(sendbutton);
 
-
-    logoutButton.addEventListener("click", function() {
+    logoutButton.addEventListener("click", async function() {
         alert("signing out");
-        window.location.href = "/login"
+        var sessionId = getCookie("sessionId")
+        let result = await makeServerRequest("log-out", {sessionId: sessionId})
+        if(result.success == true){
+            window.location.href = "/login"
+        } else {
+            alert(result.message)
+        }
 
     })
 
@@ -63,8 +68,6 @@
         let returned = await makeServerRequest("get-user-info",{sessionId : sessionId})
         console.log(returned)
     }
-
-    
 
    // document.getElementbyID("logout-button").addEventListener("click", function() {
 //        console.log("Logging Out");
