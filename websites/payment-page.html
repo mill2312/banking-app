@@ -4,7 +4,8 @@
 </head>
 <body>
     You are logged in as <span id="username" style="font-weight: bold;">username</span>
-   
+    <button id="logout-button">Log Out</button>
+    
 
     <br>
     <h1>Payments</h1><br>
@@ -28,9 +29,6 @@
     Amount: <input><br>
     <button>Request</button>
 
-    
-
-
 </body>
 <script src="/client-functions.js"></script>
 
@@ -38,9 +36,11 @@
 
 // //<button id="logout-button">Log Out</button> earlier
 
-    const logoutbutton = document.createElement("Button");
-    logoutbutton.innerHTML = "Log Out";
-    document.body.appendChild(logoutbutton);
+    // const logoutbutton = document.createElement("Button");
+    // logoutbutton.innerHTML = "Log Out";
+    // document.body.appendChild(logoutbutton);
+
+    var logoutButton = document.getElementById("logout-button")
 
 
     const sendbutton = document.createElement("Button");
