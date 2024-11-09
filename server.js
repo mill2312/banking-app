@@ -467,3 +467,60 @@ app.post("/endpoint/log-out", function(req, res) {
     }
   );
 });
+
+/**
+ * Get Last 10 Transactions
+ * Input: { sessionId }
+ * Output: { success, transactions: Array }
+ */
+app.post("/endpoint/get-last-10-transactions", function(req, res) {
+  const requestJson = req.body;
+  console.log("Request for last 10 transactions:", requestJson);
+
+  // Validate the sessionId
+  if (validation.getLast10Transactions.validate(requestJson).error) {
+    return res.json({
+      success: false,
+      message: validation.getLast10Transactions.validate(requestJson).error.message
+    });
+  }
+
+  // Find the user by sessionId to get their user ID
+  usersDb.findOne({ username: requestJson.username }, function(err, userDoc) {
+    if (err) {
+      console.error("Error finding user:", err);
+      return res.status(500).json({ success: false, message: "Error finding user" });
+    }
+
+    if (!userDoc) {
+      return res.json({ success: false, message: "Invalid user" });
+    }
+
+
+    const userId = userDoc._id;
+
+    // Find the last 10 transactions for this user as either sender or receiver
+    paymentsDb.find({ $or: [{ senderId: userId }, { receiverId: userId }] })
+      .sort({ time: -1 }) 
+      .limit(10)          
+      .exec(function(err, transactions) {
+        if (err) {
+          console.error("Error retrieving transactions:", err);
+          return res.status(500).json({ success: false, message: "Error retrieving transactions" });
+        }
+
+        // Return the transactions array
+        res.json({
+          success: true,
+          transactions: transactions.map(transaction => ({
+            transactionId: transaction._id,
+            amount: transaction.amount,
+            time: new Date(transaction.time).toLocaleString(),
+            approved: transaction.approved,
+            type: transaction.senderId === userId ? "sent" : "received",
+            otherUser: transaction.senderId === userId ? transaction.receiverId : transaction.senderId
+          }))
+        });
+      });
+  });
+});
