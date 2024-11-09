@@ -240,11 +240,14 @@ app.post("/endpoint/pay", function(req,res){
  * it updates the user's balance too.
  * @param {string} senderId _id of Sender
  * @param {string} recieverId _id of Reciever
- * @param {number} amount Amount to pay the reciever
+ * @param {number} amount Amount to pay the reciever <-- positive
  * @param {boolean} approved Has this transaction gone through?
  * @param {function(err, doc)} callback Function callback
  */
 function addPaymentToDb(senderId, recieverId, amount, approved, callback){
+
+  amount = Number(amount) // Ensure the amount is a number
+
   paymentsDb.insert({
     senderId: senderId,
     recieverId: recieverId,
@@ -256,19 +259,33 @@ function addPaymentToDb(senderId, recieverId, amount, approved, callback){
   // We want to update the recieving user's balance if it is
   // initially approved.
   if(approved == true){
+
+    // TODO: Handle not enough balance problems. Would require 
+    // very deep nesting of database calls
+
     usersDb.findOne({_id: recieverId}, function(err,doc){
       if(err){throw new Error("Unexpected error. The recieverId should be valid.")}
       /** The current balance of the user */
-      let currentBalance = doc.balance 
+      let currentRecieverBalance = doc.balance 
       usersDb.update({_id: recieverId}, 
-        {$set: {balance: currentBalance + amount}}, function(err,n){
+        {$set: {balance: currentRecieverBalance + amount}}, function(err,n){
         if(err){throw new Error("Unexpected error - could not update balance of user.")}
       })
     })
 
-    // Now set the sending user's balance.
+    // Now set the sending user's balance (which we will subtract from)
     //usersDb
 
+    usersDb.findOne({_id: senderId}, function(err, doc){
+      if(err){throw new Error("Unexpected err. senderId should be valid.")}
+      // Current balance of sending user.
+      let currentSenderBalance = doc.balance
+      usersDb.update({_id: senderId}, 
+        {$set: {balance: currentSenderBalance - amount}}, function(err, n){
+          if(err){throw new Error("Unexpected error - could not update balance of user.")}
+        }
+      )
+    })
   }
 }
 
