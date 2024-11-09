@@ -33,4 +33,5 @@ Nayib Griffith
 =====================
 - Created the sign in endpoint functionality, with automatically generated session Ids.
 - Added Endpoint to destroy session Ids on user logout
+-Added view last 10 transactions functionality
 
