@@ -90,7 +90,7 @@
         console.log("Sending Money");
             //app.get("/login", function(req,res)
             //window.location.href = "/log-out"
-            sendMoney(document.getElementById("send-button"), document.getElementById("username-input-send"), document.getElementById("amount-input-send") )
+            sendMoney(document.getElementById("username-input-send").value, document.getElementById("amount-input-send").value )
 
     })
 
@@ -105,36 +105,46 @@
     */
 
 
-    async function sendMoney(userId, targetId, amount) {
-        if (!sender) {
+    async function sendMoney(targetName, money) {
+
+        let sessionId = getCookie("sessionId")
+        user = document.getElementById("username-input-send")
+
+
+        if (!user) {
             console.log("sender does not exist")
             return;
         }
 
-        if (!targetId) { // If not target Id (or if wrong)
+        if (!targetName) { // If not target Id (or if wrong)
             return;
         }
 
-        if  (sender.balance < amount) {
+        if  (user.balance < money) {
             console.log("not enough money")
             return;
         }
 
         //Can try to use a try-catch, dont want to risk it
-        datastores/userData.db
-        await fetch(`/api/users/${senderId}/updateBalance`, {
-            method : 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({amount: -money}),
+        // datastores/userData.db
+        console.log(targetName)
+        response =await makeServerRequest("pay", {
+            toUsername:  targetName,
+            sessionId: getCookie("sessionId"),
+            amount: money,
+        })
+        //alert(sessionId);
 
-        });
-        await fetch(`/api/users/${recevierId}/updateBalance`, {
-            method : 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({amount: money}),
+        console.log(response)
+        if (response.success == true) {
+            alert('here');
+            console.log('success');
+        }
 
-        });
-        console.log(`Successfully sent $${money} from ${senderId} to ${receiverId}.`);
+        
+        console.log(`Successfully sent $${money} from ${user} to ${targetName}.`);
+
+       
     }
      
 </script>
