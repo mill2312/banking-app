@@ -26,17 +26,26 @@
 
     <br>
 
-    Request from User<br>
-    Username: <input><br>
-    Amount: <input><br>
-    <button>Request</button>
+    <label for="username-request">Username</label>
+    <input id="username-request">
+
+
+    
+    <label for="amount-request">Amount</label>
+    <input id="amount-input-send">
+
+    <button id="request-button">Send</button>
 
 </body>
 <script src="/client-functions.js"></script>
 
 <script> 
 
-// //<button id="logout-button">Log Out</button> earlier
+    //Request from User<br>
+    //  Username: <input><br>
+    //Amount: <input><br>
+    //<button>Request</button>
+    // //<button id="logout-button">Log Out</button> earlier
 
     // const logoutbutton = document.createElement("Button");
     // logoutbutton.innerHTML = "Log Out";
@@ -45,6 +54,8 @@
     var logoutButton = document.getElementById("logout-button")
 
     const sendButton = document.getElementById("send-button")
+
+    const requestButton = document.getElementById("request-button")
     
     //sendbutton.innerHTML = "Send Money";
     //document.body.appendChild(sendbutton);
@@ -90,6 +101,15 @@
 
     sendButton.addEventListener("click", function() {
         //alert("here"); works
+        console.log("Sending Money");
+            //app.get("/login", function(req,res)
+            //window.location.href = "/log-out"
+            sendMoney(document.getElementById("username-input-send").value, document.getElementById("amount-input-send").value )
+
+    })
+
+    requestButton.addEventListener("click", function() {
+        alert("requesting money"); works
         console.log("Sending Money");
             //app.get("/login", function(req,res)
             //window.location.href = "/log-out"
