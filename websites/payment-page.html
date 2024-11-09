@@ -179,7 +179,7 @@
             return;
         }
 
-        response = await makeServerRequest("pay", {
+        response = await makeServerRequest("request", {
             toUsername:  targetName,
             sessionId: getCookie("sessionId"),
             amount: money,
