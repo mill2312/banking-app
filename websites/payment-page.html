@@ -3,8 +3,8 @@
     <title>Payment</title>
 </head>
 <body>
-    You are logged in as <span id="username" style="font-weight: bold;">username</span><br>
-    Balance is <span id="balance">$3048203</span> <br>
+    You are logged in as <span id="username" style="font-weight: bold;"></span><br>
+    Balance is <span id="balance" style="font-weight: bold;"></span> <br>
     <button id="logout-button">Log Out</button>
     
 
@@ -63,17 +63,20 @@
 
     async function setUserName() {
         var usernameElement = document.getElementById("username")
+        var balanceElement = document.getElementById("balance")
         var sessionId = getCookie("sessionId")
         //wait()
 
         let returned = await makeServerRequest("get-user-info",{sessionId : sessionId})
         console.log(returned)
-        let balance = returned.balance
         let username = returned.username
+        let balance = returned.balance
 
         usernameElement.innerHTML = username
+        balanceElement.innerHTML = "$" + balance
 
     }
+    
 
    // document.getElementbyID("logout-button").addEventListener("click", function() {
 //        console.log("Logging Out");
