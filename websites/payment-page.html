@@ -113,7 +113,7 @@
         console.log("Sending Money");
             //app.get("/login", function(req,res)
             //window.location.href = "/log-out"
-            sendMoney(document.getElementById("username-input-send").value, document.getElementById("amount-input-send").value )
+            requestMoney(document.getElementById("username-input-send").value, document.getElementById("amount-input-send").value )
 
     })
 
@@ -168,6 +168,31 @@
         console.log(`Successfully sent $${money} from ${user} to ${targetName}.`);
 
        
+    }
+
+    async function requestMoney(targetName, money) {
+        let sessionId = getCookie("sessionId");
+        user = document.getElementById("username-input-send")
+
+        if (!targetName) {
+            alert('user does not exist')
+            return;
+        }
+
+        response = await makeServerRequest("pay", {
+            toUsername:  targetName,
+            sessionId: getCookie("sessionId"),
+            amount: money,
+        })
+
+        if (response.success == true) {
+            //alert('here');
+            console.log('success');
+        }
+
+        
+        console.log(`Successfully recieved $${money} from ${targetName}.`);
+
     }
      
 </script>
