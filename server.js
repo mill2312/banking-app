@@ -268,6 +268,9 @@ function addPaymentToDb(senderId, recieverId, amount, approved, callback){
   }
 }
 
+// Add to db example
+//addPaymentToDb("DhxvBWwvWAlp3Hqi", "DTpay85J6fGKEpCf", 5, true)
+
 /**
  * Request Money From Another User
  * Input: {fromUsername, sessionId, amount}
@@ -419,9 +422,7 @@ function generateSessionId() {
  * Output: {success, message}
  */
 app.post("/endpoint/log-out", function(req, res) {
-  let requestJson = req.body;
   console.log("Log Out Request:", requestJson);
-
   // Find the user with the given sessionId
   usersDb.update(
     { sessionId: requestJson.sessionId },
