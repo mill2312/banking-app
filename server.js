@@ -265,6 +265,10 @@ function addPaymentToDb(senderId, recieverId, amount, approved, callback){
         if(err){throw new Error("Unexpected error - could not update balance of user.")}
       })
     })
+
+    // Now set the sending user's balance.
+    //usersDb
+
   }
 }
 
