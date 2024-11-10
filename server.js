@@ -290,7 +290,7 @@ function addPaymentToDb(senderId, recieverId, amount, approved, callback){
 }
 
 // Add to db example
-//addPaymentToDb("DhxvBWwvWAlp3Hqi", "DTpay85J6fGKEpCf", 5, true)
+addPaymentToDb("DhxvBWwvWAlp3Hqi", "DTpay85J6fGKEpCf", 5, true)
 
 /**
  * Request Money From Another User
