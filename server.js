@@ -56,6 +56,8 @@ const fs = require("fs") // File System (allows us to read files)
 const express = require('express') // Express local server-hosting library
 const validation = require("./server-input-validation")
 const Datastore = require("nedb") // Persistent File Database:  https://www.npmjs.com/package/nedb
+const ejs = require("ejs")
+
 
 /**
  * See userData.description for info about properties
@@ -110,7 +112,10 @@ app.get("/login", function(req,res){
 })
 
 app.get("/inspector", function(req,res){
-  res.send(fs.readFileSync("./websites/inspector.html", "utf-8"))
+  var html = ejs.render(fs.readFileSync("./websites/inspector.ejs", "utf-8"), 
+  {id: "12344", name: "Name", amount: "13492", approved: "True", time: "12:54PM"})
+
+  res.send(html)
   res.end() // End response.
 })
 

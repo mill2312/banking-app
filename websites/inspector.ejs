@@ -4,11 +4,20 @@
 </head>
 <body>
     Your transaction ID is <span id="Id" style="font-weight: bold;">ID</span><br>
-    Sender name is <span id="usename" style="font-weight: bold;">Name</span><br>
+    Sender name is <span id="usename" style="font-weight: bold;">
+
+        <%= name %>
+
+    </span><br>
     Amount sent is <span style="font-weight: bold;">Amount</span><br>
     Approved? <span style="font-weight: bold;">True/False</span><br>
     Time of transaction <span style="font-weight: bold;">12:00pm</span><br>
 
+
+    <!--
+      {id: "12344", name: "Name", amount: "13492", approved: "true", time: "12:54PM"})
+
+    -->
     <!--
         Sender name
         Reciever name

@@ -1,7 +1,7 @@
 {"name":"My Name","username":"Aaronweeks","password":"password","_id":"0PJBXVHSdpwOl4WB","balance":50}
-{"name":"My Name","username":"aaaaa","password":"aaaaa","_id":"DTpay85J6fGKEpCf","sessionId":"176358983","balance":-2207}
-{"name":"My Name","username":"MyUsername","password":"MyPassword1234","_id":"DhxvBWwvWAlp3Hqi","balance":40}
-{"name":"My Name","username":"asdfg","password":"asdfg","_id":"LX9ZDycBy4ZSnEYC","balance":2317}
+{"name":"My Name","username":"aaaaa","password":"aaaaa","_id":"DTpay85J6fGKEpCf","sessionId":"193098848","balance":85}
+{"name":"My Name","username":"MyUsername","password":"MyPassword1234","_id":"DhxvBWwvWAlp3Hqi","balance":15}
+{"name":"My Name","username":"asdfg","password":"asdfg","_id":"LX9ZDycBy4ZSnEYC","balance":50}
 {"name":"My Name","username":"test1","password":"test1","_id":"OjKJMliJCDZTaeB4","balance":50,"sessionId":"165346816"}
 {"name":"My Name","username":"document","password":"MyPassword1234","_id":"TNnOFyUL4s0iZYGf","balance":50}
 {"name":"My Name","username":"test","password":"test","_id":"Z5M4AdIT9s6wcZ9W","balance":50}
@@ -9,7 +9,5 @@
 {"name":"My Name","username":"MyUsername","password":"MyPassword1234","_id":"iqfX1JZTFj0Gh3Eg","balance":50}
 {"name":"My Name","username":"MyUsername","password":"MyPassword1234","_id":"oqYhYr4NS56QUlwD","balance":50}
 {"name":"My Name","username":"MyUsername","password":"MyPassword1234","_id":"u5hPkbTjEmhS9lBG","balance":50}
-{"name":"My Name","username":"aaaaa","password":"aaaaa","_id":"DTpay85J6fGKEpCf","sessionId":"176358983","balance":-2202}
-{"name":"My Name","username":"MyUsername","password":"MyPassword1234","_id":"DhxvBWwvWAlp3Hqi","balance":35}
-{"name":"My Name","username":"aaaaa","password":"aaaaa","_id":"DTpay85J6fGKEpCf","sessionId":"528199349","balance":-2202}
-{"name":"My Name","username":"asdfg","password":"asdfg","_id":"LX9ZDycBy4ZSnEYC","balance":2317,"sessionId":"649425488"}
+{"name":"My Name","username":"aaaaa","password":"aaaaa","_id":"DTpay85J6fGKEpCf","sessionId":"193098848","balance":90}
+{"name":"My Name","username":"MyUsername","password":"MyPassword1234","_id":"DhxvBWwvWAlp3Hqi","balance":10}
