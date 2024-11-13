@@ -36,6 +36,8 @@
     <input id="amount-request">
 
     <button id="request-button">Request</button>
+
+    <button id="pending-requests-button">See Pending Requests</button>
     </br>
 
 </body>
@@ -58,6 +60,8 @@
     const sendButton = document.getElementById("send-button")
 
     const requestButton = document.getElementById("request-button")
+
+    const seeRequests = document.getElementById("pending-requests-button")
     
     //sendbutton.innerHTML = "Send Money";
     //document.body.appendChild(sendbutton);
@@ -68,6 +72,18 @@
         let result = await makeServerRequest("log-out", {sessionId: sessionIdValue})
         if(result.success == true){
             window.location.href = "/login"
+        } else {
+            alert(result.message)
+        }
+
+    })
+
+    seeRequests.addEventListener("click", async function() {
+        alert("Here are the requests");
+        var sessionIdValue = getCookie("sessionId")
+        let result = await makeServerRequest("get-last-10-transactions", {sessionId: sessionIdValue})
+        if(result.success == true){
+        window.location.href = "/inspector" //or where the list will be
         } else {
             alert(result.message)
         }
