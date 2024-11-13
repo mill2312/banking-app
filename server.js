@@ -468,6 +468,8 @@ app.post("/endpoint/log-out", function(req, res) {
   );
 });
 
+// TODO: Make it so it gets last 10 transactions of all users
+
 /**
  * Get Last 10 Transactions
  * Input: { sessionId }
