@@ -54,6 +54,7 @@ killall -9 node
 
 const fs = require("fs") // File System (allows us to read files)
 const express = require('express') // Express local server-hosting library
+const auth = require("basic-auth") // Express auth library (prompts for user/pass on admin page)
 const validation = require("./server-input-validation")
 const Datastore = require("nedb") // Persistent File Database:  https://www.npmjs.com/package/nedb
 const ejs = require("ejs")
@@ -117,6 +118,24 @@ app.get("/inspector", function(req,res){
 
   res.send(html)
   res.end() // End response.
+})
+
+/**
+ * This page displays information for the
+ * system administrator, including the last
+ * 10 transactions.
+ */
+app.get("/admin", function(req,res){
+  let user = auth(req)
+
+  if (user === undefined || user['name'] !== 'admin' || user['pass'] !== 'password') {
+    res.statusCode = 401
+    res.setHeader('WWW-Authenticate', 'Basic realm="Node"')
+    res.end('Unauthorized')
+  } else {
+    res.send("Success!")
+    res.end()
+  }
 })
 
 
