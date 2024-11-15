@@ -161,7 +161,7 @@
             return;
         }
 
-        if  (user.balance < money) {
+        if (user.balance < money) {
             console.log("not enough money")
             return;
         }
@@ -169,7 +169,7 @@
         //Can try to use a try-catch, dont want to risk it
         // datastores/userData.db
         console.log(targetName)
-        response =await makeServerRequest("pay", {
+        response = await makeServerRequest("pay", {
             toUsername:  targetName,
             sessionId: getCookie("sessionId"),
             amount: money,
@@ -182,11 +182,7 @@
             console.log('success');
             setUserName();
         }
-
-        
         console.log(`Successfully sent $${money} from ${user} to ${targetName}.`);
-
-       
     }
 
     async function requestMoney(targetName, money) {
