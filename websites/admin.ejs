@@ -1,0 +1,10 @@
+<h1>Admin Page</h1>
+
+<
+<% recentTransactions.forEach(function(transaction){ %>
+    <div>
+        <b><%= transaction.sender + " to " + transaction.reciever %></b><br>
+        Amount: $<%= transaction.amount %><br>
+        Time: <%= new Date(transaction.time).toLocaleString() %><br><br>
+    </div>
+<% }) %>

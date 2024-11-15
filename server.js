@@ -74,14 +74,31 @@ app.get("/inspector", function(req,res){
 app.get("/admin", function(req,res){
   let user = auth(req)
 
-  if (user === undefined || user['name'] !== 'admin' || user['pass'] !== 'password') {
+  if(user === undefined || user['name'] !== 'admin' || user['pass'] !== 'password') {
     res.statusCode = 401
     res.setHeader('WWW-Authenticate', 'Basic realm="Node"')
     res.end('Unauthorized')
-  } else {
-    res.send("Success!")
-    res.end()
+    return
   }
+
+  // Get the transactions
+  paymentsDb.find({}).sort({time: -1}).limit(10).exec(function(err,paymentsList){
+    usersDb.find({}, function(err, usersList){
+      let cleanPaymentList = paymentsList.map(function(paymentObj){
+        return {
+          sender: usersList.find(function(obj){return obj._id == paymentObj.senderId}).username,
+          receiver: usersList.find(function(obj){return obj._id == paymentObj.receiverId}).username,
+          amount: paymentObj.amount,
+          time: new Date(paymentObj.time)
+        }
+      })
+
+      var html = ejs.render(fs.readFileSync("./websites/admin.ejs", "utf-8"), {recentTransactions: cleanPaymentList})
+      res.send(html);
+      res.end();
+    })
+  })
+
 })
 
 
@@ -183,18 +200,18 @@ app.post("/endpoint/pay", function(req,res){
     if(senderErr){res.json({success: false, message: "Error in getting sender info"})}
     let senderId = senderDoc._id
 
-    // Get the Reciever's ID by their username
+    // Get the Receiver's ID by their username
 
-    usersDb.findOne({username: requestJson.toUsername}, function(recieverErr,recieverDoc){
-      if(recieverErr){res.json({success: false, message: "Error in getting reciever info"})}
-      let recieverId = recieverDoc._id
+    usersDb.findOne({username: requestJson.toUsername}, function(receiverErr,receiverDoc){
+      if(receiverErr){res.json({success: false, message: "Error in getting receiver info"})}
+      let receiverId = receiverDoc._id
 
       /*
         Now add this transaction to the database.
         We approve the payment immediately since it is user-initiated.
       */
 
-      addPaymentToDb(senderId, recieverId, requestJson.amount, true, function(err, doc){
+      addPaymentToDb(senderId, receiverId, requestJson.amount, true, function(err, doc){
         if(err){res.json({success: false, message: "Error in adding the payment to the database"})}
         res.json({success: true, transactionId: doc._id})
       })
@@ -209,18 +226,18 @@ app.post("/endpoint/pay", function(req,res){
  * Adds a payment to the database. If approved=true, 
  * it updates the user's balance too.
  * @param {string} senderId _id of Sender
- * @param {string} recieverId _id of Reciever
- * @param {number} amount Amount to pay the reciever <-- positive
+ * @param {string} receiverId _id of Receiver
+ * @param {number} amount Amount to pay the receiver <-- positive
  * @param {boolean} approved Has this transaction gone through?
  * @param {function(err, doc)} callback Function callback
  */
-function addPaymentToDb(senderId, recieverId, amount, approved, callback){
+function addPaymentToDb(senderId, receiverId, amount, approved, callback){
 
   amount = Number(amount) // Ensure the amount is a number
 
   paymentsDb.insert({
     senderId: senderId,
-    recieverId: recieverId,
+    receiverId: receiverId,
     amount: amount,
     time: Date.now(),
     approved: approved
@@ -233,12 +250,12 @@ function addPaymentToDb(senderId, recieverId, amount, approved, callback){
     // TODO: Handle not enough balance problems. Would require 
     // very deep nesting of database calls
 
-    usersDb.findOne({_id: recieverId}, function(err,doc){
-      if(err){throw new Error("Unexpected error. The recieverId should be valid.")}
+    usersDb.findOne({_id: receiverId}, function(err,doc){
+      if(err){throw new Error("Unexpected error. The receiverId should be valid.")}
       /** The current balance of the user */
-      let currentRecieverBalance = doc.balance 
-      usersDb.update({_id: recieverId}, 
-        {$set: {balance: currentRecieverBalance + amount}}, function(err,n){
+      let currentReceiverBalance = doc.balance 
+      usersDb.update({_id: receiverId}, 
+        {$set: {balance: currentReceiverBalance + amount}}, function(err,n){
         if(err){throw new Error("Unexpected error - could not update balance of user.")}
       })
     })
@@ -270,7 +287,7 @@ addPaymentToDb("DhxvBWwvWAlp3Hqi", "DTpay85J6fGKEpCf", 5, true)
  * 
  * Note: The sender is sending debt to the recieving user, so the
  * sender's balance will go up when approved and the
- * reciever's balance will go down.
+ * receiver's balance will go down.
  */
 app.post("/endpoint/request", function(req,res){
   let requestJson = req.body
@@ -292,11 +309,11 @@ app.post("/endpoint/request", function(req,res){
     if(senderErr){res.json({success: false, message: "Error in getting sender info"})}
     let senderId = senderDoc._id
 
-    // Get the Reciever's ID by their username
+    // Get the Receiver's ID by their username
 
-    usersDb.findOne({username: requestJson.fromUsername}, function(recieverErr,recieverDoc){
-      if(recieverErr){res.json({success: false, message: "Error in getting reciever info"})}
-      let recieverId = recieverDoc._id
+    usersDb.findOne({username: requestJson.fromUsername}, function(receiverErr,receiverDoc){
+      if(receiverErr){res.json({success: false, message: "Error in getting receiver info"})}
+      let receiverId = receiverDoc._id
 
       /*
         Add transaction to database, but do NOT approve immediately.
@@ -304,7 +321,7 @@ app.post("/endpoint/request", function(req,res){
         user must be able to deny the request from the sender.
       */
 
-      addPaymentToDb(senderId, recieverId, requestJson.amount, false, function(err, doc){
+      addPaymentToDb(senderId, receiverId, requestJson.amount, false, function(err, doc){
         if(err){res.json({success: false, message: "Error in adding the payment to the database"})}
         res.json({success: true, transactionId: doc._id})
       })
@@ -449,16 +466,16 @@ app.post("/endpoint/get-last-10-transactions", function(req, res) {
   const requestJson = req.body;
   console.log("Request for last 10 transactions:", requestJson);
 
-  // Validate the sessionId
-  if (validation.getLast10Transactions.validate(requestJson).error) {
-    return res.json({
-      success: false,
-      message: validation.getLast10Transactions.validate(requestJson).error.message
-    });
-  }
+  // // Validate the sessionId
+  // if (validation.getLast10Transactions.validate(requestJson).error) {
+  //   return res.json({
+  //     success: false,
+  //     message: validation.getLast10Transactions.validate(requestJson).error.message
+  //   });
+  // }
 
   // Find the user by sessionId to get their user ID
-  usersDb.findOne({ username: requestJson.username }, function(err, userDoc) {
+  usersDb.findOne({ sessionId: requestJson.sessionId }, function(err, userDoc) {
     if (err) {
       console.error("Error finding user:", err);
       return res.status(500).json({ success: false, message: "Error finding user" });
@@ -492,7 +509,8 @@ app.post("/endpoint/get-last-10-transactions", function(req, res) {
             type: transaction.senderId === userId ? "sent" : "received",
             otherUser: transaction.senderId === userId ? transaction.receiverId : transaction.senderId
           }))
-        });
+        })
+        res.end()
       });
   });
 });
