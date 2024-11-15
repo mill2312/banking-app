@@ -1,7 +1,7 @@
 const fs = require("fs") // File System (allows us to read files)
 const express = require('express') // Express local server-hosting library
 const auth = require("basic-auth") // Express auth library (prompts for user/pass on admin page)
-const validation = require("./server-input-validation")
+const validation = require("./validation-library")
 const Datastore = require("nedb") // Persistent File Database:  https://www.npmjs.com/package/nedb
 const ejs = require("ejs")
 
@@ -93,7 +93,9 @@ app.get("/admin", function(req,res){
         }
       })
 
-      var html = ejs.render(fs.readFileSync("./websites/admin.ejs", "utf-8"), {recentTransactions: cleanPaymentList})
+      var html = ejs.render(fs.readFileSync("./websites/admin.ejs", "utf-8"), {recentTransactions: cleanPaymentList,
+        numberOfUsers: usersList.length
+      })
       res.send(html);
       res.end();
     })
@@ -455,16 +457,18 @@ app.post("/endpoint/log-out", function(req, res) {
   );
 });
 
-// TODO: Make it so it gets last 10 transactions of all users
-
 /**
- * Get Last 10 Transactions
+ * Gets the last 10 transactions (where they
+ * either sent or received money) of the
+ * user identified by sessionId.
  * Input: { sessionId }
  * Output: { success, transactions: Array }
  */
 app.post("/endpoint/get-last-10-transactions", function(req, res) {
   const requestJson = req.body;
   console.log("Request for last 10 transactions:", requestJson);
+
+  // TODO: Add validation for get-last-10-transactions endpoint
 
   // // Validate the sessionId
   // if (validation.getLast10Transactions.validate(requestJson).error) {
@@ -489,13 +493,14 @@ app.post("/endpoint/get-last-10-transactions", function(req, res) {
     const userId = userDoc._id;
 
     // Find the last 10 transactions for this user as either sender or receiver
-    paymentsDb.find({ $or: [{ senderId: userId }, { receiverId: userId }] })
+    paymentsDb.find({ $or: [{ senderId: userId }, { receiverId: userId }], approved: true })
       .sort({ time: -1 }) 
       .limit(10)          
       .exec(function(err, transactions) {
         if (err) {
           console.error("Error retrieving transactions:", err);
-          return res.status(500).json({ success: false, message: "Error retrieving transactions" });
+          return res.status(500).json(
+            { success: false, message: "Error retrieving transactions" });
         }
 
         // Return the transactions array
@@ -506,8 +511,8 @@ app.post("/endpoint/get-last-10-transactions", function(req, res) {
             amount: transaction.amount,
             time: new Date(transaction.time).toLocaleString(),
             approved: transaction.approved,
-            type: transaction.senderId === userId ? "sent" : "received",
-            otherUser: transaction.senderId === userId ? transaction.receiverId : transaction.senderId
+            type: transaction.senderId == userId ? "sent" : "received",
+            otherUser: transaction.senderId == userId ? transaction.receiverId : transaction.senderId
           }))
         })
         res.end()

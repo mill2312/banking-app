@@ -3,6 +3,22 @@
     client to the server. For example, this allows to
     check that required inputs like username, password,
     and name are included in a new user account request.
+
+    We store these validation objects (created by 
+    the Joi.object() function) here and call on them
+    in our server code to validate the request JSON
+    before going forward in the code.
+    
+    It's imported in server.js like this:
+
+        const validation = require("./validation-library")
+
+    And we test inputs like this, for example:
+
+        if(validation.signIn.validate(requestJson).error){
+            // Respond to client with error
+            return
+        }
 */
 
 const Joi = require("joi")

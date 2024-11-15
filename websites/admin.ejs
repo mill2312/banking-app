@@ -1,10 +1,17 @@
-<h1>Admin Page</h1>
+<body style="font-family: Arial, Helvetica, sans-serif">
+    <h1>Admin Page</h1>
 
-<
-<% recentTransactions.forEach(function(transaction){ %>
-    <div>
-        <b><%= transaction.sender + " to " + transaction.reciever %></b><br>
-        Amount: $<%= transaction.amount %><br>
-        Time: <%= new Date(transaction.time).toLocaleString() %><br><br>
+    Number of users: <%= numberOfUsers %><br>
+    
+    Recent transactions:<br>
+    <div style="border: 1px solid black">
+        <% recentTransactions.forEach(function(transaction){ %>
+            <div>
+                <b><%= transaction.sender + " to " + transaction.reciever %></b><br>
+                Amount: $<%= transaction.amount %><br>
+                Time: <%= new Date(transaction.time).toLocaleString() %><br><br>
+            </div>
+        <% }) %>
     </div>
-<% }) %>
+    
+</body>

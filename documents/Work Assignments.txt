@@ -1,31 +1,32 @@
 ........................................
-                Week 1
+                Week 1                          Progress
 ........................................
 Mon, Oct 28
 ...........
-    - JOSH: Participation log in GitHub
+    - JOSH: Participation log in GitHub         DONE
         for tracking
 
 Wed, Oct 30
 ...........
-    - JOSH: Show User Balance endpoint
+    - JOSH: Show User Balance endpoint          DONE
         through sessionId
-    - NAYIB: Create Log Out endpoint
+    - NAYIB: Create Log Out endpoint            DONE
         that destroys sessionId
-    - ALEX & AARON: Create input and
+    - ALEX & AARON: Create input and            DONE
         functionality for Log Out on
         payment page
 
 Fri, Nov 1
 ...........
-    - JOSH: Create '/admin' webpage with
+    - JOSH: Create '/admin' webpage with        DONE
         authentification
-    - NAYIB: Create endpoint to show the
-        10 most recent transactions (for
-        the '/admin' webpage)
-    - ALEX: Create Send Payment inputs
+    - NAYIB: Create endpoint to show the        DONE        
+        10 most recent transactions
+        which are approved/fulfilled
+        (for user payment page)
+    - ALEX: Create Send Payment inputs          *
         and functionality
-    - AARON: Using the endpoint, show the
+    - AARON: Using the endpoint, show the       DONE
         logged in user's current balance
         on payment page. ("get-user-info"
         endpoint)
@@ -36,14 +37,14 @@ Fri, Nov 1
 
 Wed, Nov 6
 ...........
-    - JOSH: Accept/Deny Payment Request
+    - JOSH: Accept/Deny Payment Request         *
         endpoint
-    - NAYIB: Get Requests (payment
+    - NAYIB: Get Requests (payment              *
         requests for logged in user)
         endpoint
-    - ALEX: Create Request Payment
+    - ALEX: Create Request Payment              *
         inputs and functionality
-    - AARON: Create a template for the
+    - AARON: Create a template for the          DONE
         Payment inspector page (which
         shows details about one
         transaction with the ability to
@@ -51,10 +52,10 @@ Wed, Nov 6
 
 Fri, Nov 8
 ...........
-    - JOSH & ALEX: Create Accept or
+    - JOSH & ALEX: Create Accept or             *
         Deny Requests for Payments
         inptus and functionality
-    - NAYIB & AARON: Improve the overall
+    - NAYIB & AARON: Improve the overall        *
         appearance of the webpages
         
 ........................................
@@ -63,19 +64,19 @@ Fri, Nov 8
 
 Wed, Nov 13
 ...........
-    - JOSH & AARON: Work on slides, part
+    - JOSH & AARON: Work on slides, part        *
         A and B (project description
         requirements we implemented)
-    - ALEX & NAYIB: Record video demo of
+    - ALEX & NAYIB: Record video demo of        *
         the project, showing the
         corresponding requirements.
 
 Fri, Nov 15
 ...........
-    - ALL: Work on Slides, adding your
+    - ALL: Work on Slides, adding your          *
         experience of working in the
         group.
-    - JOSH: Create installation
+    - JOSH: Create installation                 *
         instructions.
-    - AARON: Compile Group 
+    - AARON: Compile Group                      *
         Participation report.
