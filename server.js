@@ -329,7 +329,30 @@ app.post("/endpoint/request", function(req,res){
       })
     })
   })
+})
 
+/**
+ * Accept or deny a payment request
+ * from another user
+ * Input: {sessionId, paymentId}
+ * Output: {success, message}
+ */
+app.post("/endpoint/accept-deny-request", function(req,res){
+  let requestJson = req.body
+  console.log(requestJson)
+
+})
+
+/**
+ * Lists all of the requests for a
+ * user with their session ID
+ * Input: {sessionId}
+ * Output: {success, message, [Array of transactions]}
+ */
+app.post("/endpoint/list-requests-for-user", function(req,res){
+  let requestJson = req.body
+  console.log(requestJson)
+  
 })
 
 /**
