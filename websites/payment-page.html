@@ -87,7 +87,7 @@
         let result = await makeServerRequest("get-last-10-transactions", {sessionId: sessionIdValue})
         
         if(result.success == true){
-        //window.location.href = "/inspector" //or where the list will be
+            window.location.href = "/inspector" //or where the list will be
         } else {
             let listDiv = document.getElementById("list-div")
             listDiv.innerHTML = ""

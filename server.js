@@ -432,6 +432,7 @@ function generateSessionId() {
  * Output: {success, message}
  */
 app.post("/endpoint/log-out", function(req, res) {
+  let requestJson = req.body;
   console.log("Log Out Request:", requestJson);
   // Find the user with the given sessionId
   usersDb.update(
