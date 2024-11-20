@@ -1,14 +1,30 @@
 <!DOCTYPE html>
 <head>
     <title>Requests</title>
-    Your ID is <span id="username" style="font-weight: bold;"></span> <br>
 
 </head>
 <body>
+    Your ID is <span id="username" style="font-weight: bold;"></span> <br>
+
 
     //paymentsdb
     //check if reciever ID is you
 
+    //get-last-10-transactions(username)
+
+    find(username)
 
 
 </body>
+
+async function seeTranactions() {
+    var usernameElement = document.getElementById("username")
+
+    <!-- #region 
+    Want to search payments where accept is null, then print in order
+    -->
+
+    var sessionId = getCookie("sessionId")
+    
+
+}
