@@ -24,7 +24,7 @@ Fri, Nov 1
         10 most recent transactions
         which are approved/fulfilled
         (for user payment page)
-    - ALEX: Create Send Payment inputs          *
+    - ALEX: Create Send Payment inputs          DONE
         and functionality
     - AARON: Using the endpoint, show the       DONE
         logged in user's current balance
@@ -42,7 +42,7 @@ Wed, Nov 6
     - NAYIB: Get Requests (payment              *
         requests for logged in user)
         endpoint
-    - ALEX: Create Request Payment              *
+    - ALEX: Create Request Payment              DONE
         inputs and functionality
     - AARON: Create a template for the          DONE
         Payment inspector page (which
