@@ -5,7 +5,6 @@ const validation = require("./validation-library")
 const Datastore = require("nedb") // Persistent File Database:  https://www.npmjs.com/package/nedb
 const ejs = require("ejs")
 
-
 /**
  * See userData.description for info about properties
  */
@@ -332,6 +331,8 @@ app.post("/endpoint/request", function(req,res){
 })
 
 /**
+ * NAYIB
+ * 
  * Accept or deny a payment request
  * from another user
  * Input: {sessionId, paymentId}
@@ -344,6 +345,8 @@ app.post("/endpoint/accept-deny-request", function(req,res){
 })
 
 /**
+ * JOSH
+ * 
  * Lists all of the requests for a
  * user with their session ID
  * Input: {sessionId}
@@ -353,6 +356,19 @@ app.post("/endpoint/list-requests-for-user", function(req,res){
   let requestJson = req.body
   console.log(requestJson)
   
+  usersDb.findOne({sessionId: requestJson.sessionId}, function(err, user){
+    if(err || user == null){
+      res.json({success: false, message: "Error finding user"})
+      return res.end()
+    }
+
+    let userId = user._id
+    // We look for userId in receivingId, which is not approved.
+    // (Payment requests have negative balance with the debt recieving
+    // user in the receivingId field)
+
+    // TODO: Finish this function
+  })
 })
 
 /**
