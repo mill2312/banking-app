@@ -62,7 +62,8 @@ app.get("/requests", function(req,res){
   res.end() // End response.
 })
 
-app.get("/inspector", function(req,res){
+app.get("/inspector/:transactionId", function(req,res){
+  
   var html = ejs.render(fs.readFileSync("./websites/inspector.ejs", "utf-8"), 
   {id: "12344", name: "Name", amount: "13492", approved: "True", time: "12:54PM"})
 

@@ -87,7 +87,7 @@
         let result = await makeServerRequest("get-last-10-transactions", {sessionId: sessionIdValue})
         
         if(result.success == true){
-            window.location.href = "/requests" //or where the list will be, was inspector
+            window.location.href = "/inspector" //or where the list will be
         } else {
             let listDiv = document.getElementById("list-div")
             listDiv.innerHTML = ""
@@ -189,8 +189,11 @@
             //alert('here');
             console.log('success');
             setUserName();
+            console.log(`Successfully sent $${money} from ${user} to ${targetName}.`);
+
+        } else {
+            alert(response.message)
         }
-        console.log(`Successfully sent $${money} from ${user} to ${targetName}.`);
     }
 
     async function requestMoney(targetName, money) {
