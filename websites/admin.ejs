@@ -4,12 +4,19 @@
     Number of users: <%= numberOfUsers %><br>
     
     Recent transactions:<br>
-    <div style="border: 1px solid black">
+    <div style="">
         <% recentTransactions.forEach(function(transaction){ %>
-            <div>
-                <b><%= transaction.sender + " to " + transaction.reciever %></b><br>
-                Amount: $<%= transaction.amount %><br>
-                Time: <%= new Date(transaction.time).toLocaleString() %><br><br>
+            <div style="border:1px solid black;margin-bottom: 10px;padding:10px;width:300px">
+                <i><%= new Date(transaction.time).toLocaleString() %></i><br><br>
+
+                From: <b><%= transaction.sender %></b><br>
+                To: <b><%= transaction.receiver %></b><br>
+                
+                Amount: $<%= transaction.amount %>
+                <span style="background-color:beige;margin-left:10px">
+                    <%= transaction.approved ? "Approved" : "Pending" %>
+                </span>
+                <br>
             </div>
         <% }) %>
     </div>

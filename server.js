@@ -1,8 +1,19 @@
-const fs = require("fs") // File System (allows us to read files)
-const express = require('express') // Express local server-hosting library
-const auth = require("basic-auth") // Express auth library (prompts for user/pass on admin page)
+// File System (allows us to read files)
+const fs = require("fs")
+
+// Express local server-hosting library
+const express = require('express')
+
+// Express auth library (prompts for user/pass on admin page)
+const auth = require("basic-auth")
+
+// Validation library for checking client requests
 const validation = require("./validation-library")
-const Datastore = require("nedb") // Persistent File Database:  https://www.npmjs.com/package/nedb
+
+// Persistent File Database:  https://www.npmjs.com/package/nedb
+const Datastore = require("nedb")
+
+// Templating engine (renders .ejs files)
 const ejs = require("ejs")
 
 /**
@@ -68,7 +79,7 @@ app.get("/inspector/:transactionId", function(req,res){
   {id: "12344", name: "Name", amount: "13492", approved: "True", time: "12:54PM"})
 
 
-  
+
   res.send(html)
   res.end() // End response.
 })
@@ -96,6 +107,7 @@ app.get("/admin", function(req,res){
           sender: usersList.find(function(obj){return obj._id == paymentObj.senderId}).username,
           receiver: usersList.find(function(obj){return obj._id == paymentObj.receiverId}).username,
           amount: paymentObj.amount,
+          approved: paymentObj.approved,
           time: new Date(paymentObj.time)
         }
       })
@@ -340,12 +352,22 @@ app.post("/endpoint/request", function(req,res){
  * 
  * Accept or deny a payment request
  * from another user
- * Input: {sessionId, paymentId}
+ * Input: {sessionId, paymentId, accept}
  * Output: {success, message}
  */
 app.post("/endpoint/accept-deny-request", function(req,res){
   let requestJson = req.body
   console.log(requestJson)
+
+  // TODO: Josh - Add validation
+
+  /*
+  If request is accepted (requestJson.accept == true), 
+  deduct the balance form the current user and give the
+  requesting user the money. 
+  
+  Otherwise, if denied, delete the request.
+  */
 
 })
 
@@ -355,12 +377,13 @@ app.post("/endpoint/accept-deny-request", function(req,res){
  * Lists all of the requests for a
  * user with their session ID
  * Input: {sessionId}
- * Output: {success, message, [Array of transactions]}
+ * Output: {success, message, requests[Array of transactions]}
  */
 app.post("/endpoint/list-requests-for-user", function(req,res){
   let requestJson = req.body
   console.log(requestJson)
   
+  // Find the user we want to see request for
   usersDb.findOne({sessionId: requestJson.sessionId}, function(err, user){
     if(err || user == null){
       res.json({success: false, message: "Error finding user"})
@@ -368,11 +391,52 @@ app.post("/endpoint/list-requests-for-user", function(req,res){
     }
 
     let userId = user._id
-    // We look for userId in receivingId, which is not approved.
+    // We look for payment requests where userId == receivingId that are not approved.
     // (Payment requests have negative balance with the debt recieving
     // user in the receivingId field)
 
-    // TODO: Finish this function
+    paymentsDb.find({receivingId: userId, approved: false}, function(err,userRequestDocs){
+      if(err){
+        res.json({success: false, message: err})
+        return res.end()
+      }
+
+      /*
+        We want to return
+        - requestor username
+        - amount they want
+        - time of request
+        for each of the requests.
+
+      */
+
+      // Get all users so we can map
+      usersDb.find({}, function(err, usersList){
+
+        if(err){
+          res.json({success: false, message: "Error getting user list"})
+          return res.end()
+        }
+
+        // Map user request docs
+        let requests = userRequestDocs.map(function(paymentObj){
+          return {
+            sender: usersList.find(function(obj){return obj._id == paymentObj.senderId}).username,
+            receiver: usersList.find(function(obj){return obj._id == paymentObj.receiverId}).username,
+            amount: paymentObj.amount,
+            approved: paymentObj.approved,
+            time: new Date(paymentObj.time)
+          }
+        })
+
+        res.json({
+          success: true,
+          message: "Success!",
+          requests: requests,
+        })
+        res.end()
+      })
+    })
   })
 })
 
