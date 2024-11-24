@@ -52,7 +52,9 @@
         alert("Viewing Requests");
         var sessionIdValue = getCookie("sessionId")
         //let result = await makeServerRequest("payment-page", {sessionId: sessionIdValue})
-        let result2 = await makeServerRequest("list-requests-for-user")
+        let result2 = await makeServerRequest("list-requests-for-user", {sessionId: sessionIdValue})
+        alert(JSON.stringify(result2))
+
         //window.location.href = "/payment-page"
     })
 
@@ -60,7 +62,10 @@
         alert("Choose to Accept or Deny these requests");
         var sessionIdValue = getCookie("sessionId")
         //let result = await makeServerRequest("payment-page", {sessionId: sessionIdValue})
-        let result = await makeServerRequest("accept-deny-requests")
+
+
+        // Would I need to do something for for (request:getLast10Transaction()) ?
+        let result = await makeServerRequest("accept-deny-request", {sessionId: sessionIdValue})
         //window.location.href = "/payment-page"
     })
 

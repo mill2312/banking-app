@@ -200,18 +200,22 @@
         }
 
         response = await makeServerRequest("request", {
-            toUsername:  targetName,
+            fromUsername:  targetName,
             sessionId: getCookie("sessionId"),
-            amount: money,
+            amount: money * -1,
         })
 
         if (response.success == true) {
             //alert('here');
             console.log('success');
+
+            console.log(`Successfully requested $${money} from ${targetName}.`);
+
+        } else {
+            alert(JSON.stringify(response))
         }
 
         
-        console.log(`Successfully recieved $${money} from ${targetName}.`);
 
     }
      

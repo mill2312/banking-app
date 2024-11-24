@@ -404,17 +404,21 @@ app.post("/endpoint/list-requests-for-user", function(req,res){
       res.json({success: false, message: "Error finding user"})
       return res.end()
     }
+    console.log("Found user")
 
     let userId = user._id
-    // We look for payment requests where userId == receivingId that are not approved.
+    // We look for payment requests where userId == receiverId that are not approved.
     // (Payment requests have negative balance with the debt recieving
-    // user in the receivingId field)
+    // user in the receiverId field)
 
-    paymentsDb.find({receivingId: userId, approved: false}, function(err,userRequestDocs){
+    paymentsDb.find({receiverId: userId, approved: false}, function(err,userRequestDocs){
       if(err){
         res.json({success: false, message: err})
         return res.end()
       }
+
+      console.log("Found request " )
+
 
       /*
         We want to return
@@ -474,7 +478,6 @@ app.post("/endpoint/get-user-info", function(req,res){
     })
     return
   }
-
   usersDb.findOne({sessionId: requestJson.sessionId}, function(err,doc){
     if(err){res.json({success: false, message: err.message});return;}
     // We return true because it successfully ensured the session Id does not exist anymore
