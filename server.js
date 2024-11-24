@@ -384,6 +384,9 @@ app.post("/endpoint/accept-deny-request", function(req,res){
 
   */
 
+  res.json({success: true, message: "Test"});
+  res.end()
+
   paymentsDb.findOne({_id: requestJson.paymentId}, function(err, paymentDoc){
     if(err || paymentDoc == null){
       res.json({success: false, message: "Error finding user"})

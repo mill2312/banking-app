@@ -27,6 +27,7 @@
 <script>
 
     setUserName()
+    getRequestsList()
     //find(username)
     //seeTransactions();
 
@@ -36,7 +37,7 @@
 
     const requestPageButton = document.getElementById("see-requests-button")
 
-    const acceptDenyButton = document.getElementById("accept-deny-button")
+    //const acceptDenyButton = document.getElementById("accept-deny-button")
 
     logoutButton.addEventListener("click", async function() {
         alert("signing out");
@@ -53,7 +54,8 @@
         window.location.href = "/payment-page"
     })
 
-    requestPageButton.addEventListener("click", async function() {
+
+     async function getRequestsList() {
         alert("Viewing Requests");
         var sessionIdValue = getCookie("sessionId")
         //let result = await makeServerRequest("payment-page", {sessionId: sessionIdValue})
@@ -90,7 +92,7 @@
 
 
         //window.location.href = "/payment-page"
-    })
+    }
 
     async function acceptRequest(paymentId){
         var response = await makeServerRequest("accept-deny-request", {sessionId: getCookie("sessionId"), paymentId: paymentId, accept: true} )
@@ -101,17 +103,19 @@
 
     }
 
+    /*
     acceptDenyButton.addEventListener("click", async function() {
         alert("Choose to Accept or Deny these requests");
         var sessionIdValue = getCookie("sessionId")
         //let result = await makeServerRequest("payment-page", {sessionId: sessionIdValue})
-        var paymentIdValue = getPayment
+        var paymentIdValue = getPayment()
         var choice = true
 
         // Would I need to do something for for (request:getLast10Transaction()) ?
         let result = await makeServerRequest("accept-deny-request", {sessionId: sessionIdValue}, {}, {accept: True})
         //window.location.href = "/payment-page"
     })
+    */
 
     
     
