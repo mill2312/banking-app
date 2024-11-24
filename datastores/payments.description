@@ -1,8 +1,6 @@
 Contains transaction information (for payments and requests)
 ................................................................................
 
-name            Name of the user (not currently used for anything)
-
 senderId        _id of user in userData.db that sent this payment/debt
 
 receiverId      _id of user that shall receive the payment/debt if approved

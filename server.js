@@ -362,11 +362,11 @@ app.post("/endpoint/request", function(req,res){
 })
 
 /**
- * NAYIB
+ * AARON
  * 
  * Accept or deny a payment request
  * from another user
- * Input: {sessionId, paymentId, accept}
+ * Input: {sessionId, paymentId, accept (true/false)}
  * Output: {success, message}
  */
 app.post("/endpoint/accept-deny-request", function(req,res){
@@ -381,8 +381,32 @@ app.post("/endpoint/accept-deny-request", function(req,res){
   requesting user the money. 
   
   Otherwise, if denied, delete the request.
-  
+
   */
+
+  paymentsDb.findOne({_id: requestJson.paymentId}, function(err, paymentDoc){
+    if(err || paymentDoc == null){
+      res.json({success: false, message: "Error finding user"})
+      return res.end()
+    }
+
+    let senderAmountToAdd = paymentDoc.amount * -1
+    let receiverAmountToAdd = paymentDoc.amount
+
+    usersDb.findOne({_id: paymentDoc.senderId}, function(err, senderDoc){
+      if(err || senderDoc == null){
+        res.json({success: false, message: "Error finding user"})
+        return res.end()
+      }
+
+      usersDb.update({_id: paymentDoc.senderId}, 
+        {$set: {balance: senderDoc.balance + senderAmountToAdd}})
+
+      console.log(senderDoc.username)
+    })
+  })
+
+
 
 })
 

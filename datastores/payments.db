@@ -17,12 +17,9 @@
 {"senderId":"DhxvBWwvWAlp3Hqi","receiverId":"DTpay85J6fGKEpCf","amount":5,"time":1731677668331,"approved":true,"_id":"TlCMqF1ap80CZL3Z"}
 {"senderId":"DhxvBWwvWAlp3Hqi","receiverId":"DTpay85J6fGKEpCf","amount":5,"time":1731681053881,"approved":true,"_id":"UGTipNJnEUBvICjW"}
 {"senderId":"DhxvBWwvWAlp3Hqi","receiverId":"DTpay85J6fGKEpCf","amount":5,"time":1732285301365,"approved":true,"_id":"UGVs8IHbnHBK9oDI"}
-{"senderId":"DhxvBWwvWAlp3Hqi","receiverId":"DTpay85J6fGKEpCf","amount":5,"time":1731191328593,"approved":false,"_id":"VZlzQf6ARXAQFLQS"}
+{"senderId":"DhxvBWwvWAlp3Hqi","receiverId":"DTpay85J6fGKEpCf","amount":-5,"time":1731191328593,"approved":false,"_id":"VZlzQf6ARXAQFLQS"}
 {"senderId":"DhxvBWwvWAlp3Hqi","receiverId":"DTpay85J6fGKEpCf","amount":5,"time":1731509153279,"approved":true,"_id":"WJ7lKZH3EXIVLrDh"}
-{"senderId":"LX9ZDycBy4ZSnEYC","receiverId":"DTpay85J6fGKEpCf","amount":-5,"time":1732489297899,"approved":false,"_id":"XFQEpdXLSP0tOWAO"}
 {"senderId":"DhxvBWwvWAlp3Hqi","receiverId":"DTpay85J6fGKEpCf","amount":5,"time":1732485960332,"approved":true,"_id":"Zq9h1SX1Ot68rkbe"}
-{"senderId":"LX9ZDycBy4ZSnEYC","receiverId":"DTpay85J6fGKEpCf","amount":-5,"time":1732489310453,"approved":false,"_id":"b1jPuQNSjT8q5tfW"}
-{"senderId":"LX9ZDycBy4ZSnEYC","receiverId":"DTpay85J6fGKEpCf","amount":-5,"time":1732489288421,"approved":false,"_id":"cKTFcPE0Kx5I9QGp"}
 {"senderId":"DhxvBWwvWAlp3Hqi","receiverId":"DTpay85J6fGKEpCf","amount":5,"time":1731509071428,"approved":true,"_id":"euueKTlrkr2G8Nps"}
 {"senderId":"DhxvBWwvWAlp3Hqi","receiverId":"DTpay85J6fGKEpCf","amount":5,"time":1732283400250,"approved":true,"_id":"gCCCAF3SVsT75QrC"}
 {"senderId":"DhxvBWwvWAlp3Hqi","receiverId":"DTpay85J6fGKEpCf","amount":5,"time":1731682178538,"approved":true,"_id":"hIj35nSpMUsBSAPS"}
