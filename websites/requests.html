@@ -15,12 +15,17 @@
     <button id="payment-page-button">Go Back</button>
     <button id="see-requests-button">See Requests</button>
     <button id="accept-deny-button">Accept/Deny Requests</button>
-
+    <br>
+    <br>
+    <div id="request-list">
+        
+    </div>
 
 </body>
 
 <script src="/client-functions.js"></script>
 <script>
+
     setUserName()
     //find(username)
     //seeTransactions();
@@ -55,17 +60,56 @@
         let result2 = await makeServerRequest("list-requests-for-user", {sessionId: sessionIdValue})
         alert(JSON.stringify(result2))
 
+        let requests = result2.requests
+        let temp = ""
+        for(let request of requests){
+            temp += `
+            <div style="border: 1px solid black;margin-bottom:5px">
+                Sender: ${request.sender}
+
+                <button onclick="acceptRequest('${request.paymentId}')">Accept</button>
+                <button onclick="denyRequest('${request.paymentId}')">Deny</button>
+            </div>
+            `
+
+            /*
+                      return {
+            sender: usersList.find(function(obj){return obj._id == paymentObj.senderId}).username,
+            receiver: usersList.find(function(obj){return obj._id == paymentObj.receiverId}).username,
+            amount: paymentObj.amount,
+            approved: paymentObj.approved,
+            time: new Date(paymentObj.time)
+                        paymentId: paymentObj._id
+
+          }
+            */
+        }
+
+        document.getElementById("request-list").innerHTML = temp
+        // Added all the list
+
+
         //window.location.href = "/payment-page"
     })
+
+    async function acceptRequest(paymentId){
+        var response = await makeServerRequest("accept-deny-request", {sessionId: getCookie("sessionId"), paymentId: paymentId, accept: true} )
+        alert(JSON.stringify(response))
+    }
+
+    async function denyRequest(paymentId){
+
+    }
 
     acceptDenyButton.addEventListener("click", async function() {
         alert("Choose to Accept or Deny these requests");
         var sessionIdValue = getCookie("sessionId")
         //let result = await makeServerRequest("payment-page", {sessionId: sessionIdValue})
-
+        var paymentIdValue = getPayment
+        var choice = true
 
         // Would I need to do something for for (request:getLast10Transaction()) ?
-        let result = await makeServerRequest("accept-deny-request", {sessionId: sessionIdValue})
+        let result = await makeServerRequest("accept-deny-request", {sessionId: sessionIdValue}, {}, {accept: True})
         //window.location.href = "/payment-page"
     })
 

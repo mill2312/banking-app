@@ -468,7 +468,8 @@ app.post("/endpoint/list-requests-for-user", function(req,res){
             receiver: usersList.find(function(obj){return obj._id == paymentObj.receiverId}).username,
             amount: paymentObj.amount,
             approved: paymentObj.approved,
-            time: new Date(paymentObj.time)
+            time: new Date(paymentObj.time),
+            paymentId: paymentObj._id
           }
         })
 
