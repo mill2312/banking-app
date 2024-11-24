@@ -19,12 +19,14 @@ const ejs = require("ejs")
 /**
  * See userData.description for info about properties
  */
-var usersDb = new Datastore({filename: "./datastores/userData.db", autoload: true})
+var usersDb = new Datastore(
+  {filename: "./datastores/userData.db", autoload: true})
 
 /**
  * See payments.description for info about properties
  */
-var paymentsDb = new Datastore({filename: "./datastores/payments.db", autoload: true})
+var paymentsDb = new Datastore(
+  {filename: "./datastores/payments.db", autoload: true})
 
 
 const app = express()
@@ -92,7 +94,9 @@ app.get("/inspector/:transactionId", function(req,res){
 app.get("/admin", function(req,res){
   let user = auth(req)
 
-  if(user === undefined || user['name'] !== 'admin' || user['pass'] !== 'password') {
+  if(user == undefined 
+    || user['name'] != 'admin' 
+    || user['pass'] != 'password') {
     res.statusCode = 401
     res.setHeader('WWW-Authenticate', 'Basic realm="Node"')
     res.end('Unauthorized')
@@ -104,15 +108,20 @@ app.get("/admin", function(req,res){
     usersDb.find({}, function(err, usersList){
       let cleanPaymentList = paymentsList.map(function(paymentObj){
         return {
-          sender: usersList.find(function(obj){return obj._id == paymentObj.senderId}).username,
-          receiver: usersList.find(function(obj){return obj._id == paymentObj.receiverId}).username,
+          sender: usersList.find(function(obj){
+            return obj._id == paymentObj.senderId
+          }).username,
+          receiver: usersList.find(function(obj){
+            return obj._id == paymentObj.receiverId
+          }).username,
           amount: paymentObj.amount,
           approved: paymentObj.approved,
           time: new Date(paymentObj.time)
         }
       })
 
-      var html = ejs.render(fs.readFileSync("./websites/admin.ejs", "utf-8"), {recentTransactions: cleanPaymentList,
+      var html = ejs.render(fs.readFileSync("./websites/admin.ejs", "utf-8"), 
+      {recentTransactions: cleanPaymentList,
         numberOfUsers: usersList.length
       })
       res.send(html);
@@ -165,17 +174,20 @@ app.post("/endpoint/sign-in", function(req,res){
     return
   }
 
-  //Generates Session ID
+  // Generates Session ID
   const sessionId = generateSessionId();
 
-  //Adds Session ID to User Object
+  // Adds Session ID to User Object
   usersDb.update(
     { username: requestJson.username },
     { $set: { sessionId: sessionId } },
     function(updateErr) {
       if (updateErr) {
         console.error("Failed to update session ID:", updateErr);
-        return res.status(500).json({success: false, message: "Could not create session" });
+        return res.status(500).json({
+          success: false, 
+          message: "Could not create session"
+        })
       }
 
       // Respond with the session ID
@@ -215,13 +227,15 @@ app.post("/endpoint/pay", function(req,res){
   // Get the User's ID by their Session ID
 
   usersDb.findOne({sessionId: requestJson.sessionId}, function(senderErr,senderDoc){
-    if(senderErr){res.json({success: false, message: "Error in getting sender info"})}
+    if(senderErr){res.json({success: false, 
+      message: "Error in getting sender info"})}
     let senderId = senderDoc._id
 
     // Get the Receiver's ID by their username
 
     usersDb.findOne({username: requestJson.toUsername}, function(receiverErr,receiverDoc){
-      if(receiverErr){res.json({success: false, message: "Error in getting receiver info"})}
+      if(receiverErr){res.json({success: false, 
+        message: "Error in getting receiver info"})}
       let receiverId = receiverDoc._id
 
       /*
@@ -367,6 +381,7 @@ app.post("/endpoint/accept-deny-request", function(req,res){
   requesting user the money. 
   
   Otherwise, if denied, delete the request.
+  
   */
 
 })
