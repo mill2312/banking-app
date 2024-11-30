@@ -48,8 +48,9 @@ app.get("/", function(req,res){
     Accent (`) allows for multiple lines
   */
   res.send(`
-    Hello World!!!<br>
-    <a href="/login">Login Page</a>
+    <b>Welcome to the Banking App</b><br>
+    <a href="/login">Login</a><br>
+    <a href="/login">Sign Up</a>
   `)
   res.end() // End response
 })
@@ -90,6 +91,9 @@ app.get("/inspector/:transactionId", function(req,res){
  * This page displays information for the
  * system administrator, including the last
  * 10 transactions.
+ * 
+ * The client gets a prompt for username and password
+ * to verify that they are the admin.
  */
 app.get("/admin", function(req,res){
   let user = auth(req)
@@ -469,7 +473,7 @@ app.post("/endpoint/list-requests-for-user", function(req,res){
           return {
             sender: usersList.find(function(obj){return obj._id == paymentObj.senderId}).username,
             receiver: usersList.find(function(obj){return obj._id == paymentObj.receiverId}).username,
-            amount: paymentObj.amount,
+            amount: paymentObj.amount * -1, // For display (since the sender is sending debt, requests appear negative)
             approved: paymentObj.approved,
             time: new Date(paymentObj.time),
             paymentId: paymentObj._id

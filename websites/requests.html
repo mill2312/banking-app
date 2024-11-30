@@ -5,7 +5,7 @@
 
 </head>
 <body>
-    <br> Your ID is <span id="username" style="font-weight: bold;"></span> <br>
+    <br> You are logged in as <span id="username" style="font-weight: bold;"></span> <br>
 
 
     
@@ -59,8 +59,34 @@
         alert("Viewing Requests");
         var sessionIdValue = getCookie("sessionId")
         //let result = await makeServerRequest("payment-page", {sessionId: sessionIdValue})
-        let result2 = await makeServerRequest("list-requests-for-user", {sessionId: sessionIdValue})
-        alert(JSON.stringify(result2))
+        let response = await makeServerRequest("list-requests-for-user", {sessionId: sessionIdValue})
+        console.log(response)
+        if(!response.success){
+            alert(response.message)
+            return;
+        }
+        let tempHtml = ""
+        for(let request of response.requests){
+            tempHtml += `
+                <div style="border:1px solid black;margin-bottom:8px;width:400px">
+                    <b>$${request.amount}</b> requested from user <b>${request.sender}</b><br>
+                    Time of Request: ${new Date(request.time).toLocaleString("en-US")}
+                    <button>Accept</button>
+                    <button>Deny</button>
+                </div>
+            `
+            /*
+                What we're receiving:
+
+                    sender: usersList.find(function(obj){return obj._id == paymentObj.senderId}).username,
+                    receiver: usersList.find(function(obj){return obj._id == paymentObj.receiverId}).username,
+                    amount: paymentObj.amount,
+                    approved: paymentObj.approved,
+                    time: new Date(paymentObj.time)
+            */
+        }
+
+        document.getElementById("requests-area").innerHTML = tempHtml
 
         let requests = result2.requests
         let temp = ""
