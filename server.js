@@ -388,29 +388,60 @@ app.post("/endpoint/accept-deny-request", function(req,res){
 
   */
 
-  res.json({success: true, message: "Test"});
-  res.end()
+  if(requestJson.accept == false){
+    //  Remove the payment request
+    paymentsDb.remove({_id: requestJson.paymentId}, function(err, n){
+      if(err || n == 0){
+        res.json({success: false, message: "There was a problem removing the payment request..." 
+          + "... it may have already been deleted."})
+          return res.end()
+        
+      }
 
+      res.json({
+        success: true,
+        message: "Payment request successfully removed because it was denied"
+      })
+      res.end()
+    })
+    return
+  }
+
+  // Find the payment
   paymentsDb.findOne({_id: requestJson.paymentId}, function(err, paymentDoc){
     if(err || paymentDoc == null){
-      res.json({success: false, message: "Error finding user"})
+      res.json({success: false, message: "Error finding payment request"})
       return res.end()
     }
 
     let senderAmountToAdd = paymentDoc.amount * -1
     let receiverAmountToAdd = paymentDoc.amount
 
-    usersDb.findOne({_id: paymentDoc.senderId}, function(err, senderDoc){
-      if(err || senderDoc == null){
-        res.json({success: false, message: "Error finding user"})
-        return res.end()
-      }
+    // Find the sender, and give him his money
+    usersDb.update({_id: paymentDoc.senderId}, 
+      {$inc: {balance: senderAmountToAdd}}, function(err,n){
+        if(err || n == 0){
+          res.json({success: false, message: "Couldn't update sender balance"})
+          return res.end()
+        }
 
-      usersDb.update({_id: paymentDoc.senderId}, 
-        {$set: {balance: senderDoc.balance + senderAmountToAdd}})
+        // Find the receiver and take his money
+        // (By the way, $inc increments the field by amount)
+        usersDb.update({_id: paymentDoc.receiverId}, 
+          {$inc: {balance: receiverAmountToAdd}}, function(err, n){
+            if(err || n == 0){
+              res.json({success: false, message: "Couldn't update receiver balance"})
+              return res.end()
+            }
 
-      console.log(senderDoc.username)
-    })
+            // Now mark payment as approved
+            paymentsDb.update({_id: requestJson.paymentId}, {$set: {approved: true}})
+
+            res.json({success: true, message: "Successfully updated balances of users"})
+            res.end()
+          })
+      })
+
   })
 
 

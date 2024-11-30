@@ -6,6 +6,7 @@
 </head>
 <body>
     <br> You are logged in as <span id="username" style="font-weight: bold;"></span> <br>
+    Balance is <span id="balance" style="font-weight: bold;"></span> <br>
 
 
     
@@ -13,11 +14,11 @@
     
     <button id="logout-button">Log Out</button>
     <button id="payment-page-button">Go Back</button>
-    <button id="see-requests-button">See Requests</button>
-    <button id="accept-deny-button">Accept/Deny Requests</button>
+    <button id="see-requests-button" hidden>See Requests</button>
+    <button id="accept-deny-button" hidden>Accept/Deny Requests</button>
     <br>
     <br>
-    <div id="request-list">
+    <div id="requests-area">
         
     </div>
 
@@ -26,7 +27,7 @@
 <script src="/client-functions.js"></script>
 <script>
 
-    setUserName()
+    setUserNameAndBalance()
     getRequestsList()
     //find(username)
     //seeTransactions();
@@ -48,7 +49,7 @@
     })
 
     paymentPageButton.addEventListener("click", async function() {
-        alert("Returning to Payment Page");
+        //alert("Returning to Payment Page");
         var sessionIdValue = getCookie("sessionId")
         //let result = await makeServerRequest("payment-page", {sessionId: sessionIdValue})
         window.location.href = "/payment-page"
@@ -56,7 +57,6 @@
 
 
      async function getRequestsList() {
-        alert("Viewing Requests");
         var sessionIdValue = getCookie("sessionId")
         //let result = await makeServerRequest("payment-page", {sessionId: sessionIdValue})
         let response = await makeServerRequest("list-requests-for-user", {sessionId: sessionIdValue})
@@ -71,8 +71,9 @@
                 <div style="border:1px solid black;margin-bottom:8px;width:400px">
                     <b>$${request.amount}</b> requested from user <b>${request.sender}</b><br>
                     Time of Request: ${new Date(request.time).toLocaleString("en-US")}
-                    <button>Accept</button>
-                    <button>Deny</button>
+
+                    <button onclick="acceptRequest('${request.paymentId}')">Accept</button>
+                    <button onclick="denyRequest('${request.paymentId}')">Deny</button>
                 </div>
             `
             /*
@@ -88,45 +89,31 @@
 
         document.getElementById("requests-area").innerHTML = tempHtml
 
-        let requests = result2.requests
-        let temp = ""
-        for(let request of requests){
-            temp += `
-            <div style="border: 1px solid black;margin-bottom:5px">
-                Sender: ${request.sender}
-
-                <button onclick="acceptRequest('${request.paymentId}')">Accept</button>
-                <button onclick="denyRequest('${request.paymentId}')">Deny</button>
-            </div>
-            `
-
-            /*
-                      return {
-            sender: usersList.find(function(obj){return obj._id == paymentObj.senderId}).username,
-            receiver: usersList.find(function(obj){return obj._id == paymentObj.receiverId}).username,
-            amount: paymentObj.amount,
-            approved: paymentObj.approved,
-            time: new Date(paymentObj.time)
-                        paymentId: paymentObj._id
-
-          }
-            */
-        }
-
-        document.getElementById("request-list").innerHTML = temp
-        // Added all the list
 
 
         //window.location.href = "/payment-page"
     }
 
+    /**
+     * Accepts the request with the given ID
+     */
     async function acceptRequest(paymentId){
         var response = await makeServerRequest("accept-deny-request", {sessionId: getCookie("sessionId"), paymentId: paymentId, accept: true} )
-        alert(JSON.stringify(response))
+        if(response.success){
+            alert("Successfully accepted request. Refreshing page.")
+            location.reload()
+        }
     }
 
+    /**
+     * Declines the request with the given ID
+     */
     async function denyRequest(paymentId){
         var response = await makeServerRequest("accept-deny-request", {sessionId: getCookie("sessionId"), paymentId: paymentId, accept: false} )
+        if(response.success){
+            alert("Successfully accepted request. Refreshing page.")
+            location.reload()
+        }
     }
 
     /*
@@ -165,19 +152,19 @@
         var sessionId = getCookie("sessionId")
     }
 
-async function setUserName() {
+async function setUserNameAndBalance() {
         var usernameElement = document.getElementById("username")
-        //var balanceElement = document.getElementById("balance")
+        var balanceElement = document.getElementById("balance")
         var sessionId = getCookie("sessionId")
         //wait()
 
         let returned = await makeServerRequest("get-user-info",{sessionId : sessionId})
         console.log(returned)
         let username = returned.username
-        //let balance = returned.balance
+        let balance = returned.balance
 
         usernameElement.innerHTML = username
-        //balanceElement.innerHTML = "$" + balance
+        balanceElement.innerHTML = "$" + balance
 
     }
 
