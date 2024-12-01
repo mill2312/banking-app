@@ -26,6 +26,7 @@ Alex Hanzlicek
 - Set up Logout Button Functionality
 - Set up send functionality
 - Helped Set up recieve functionality
+-Set up requests.html
 
 
 
