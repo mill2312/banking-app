@@ -1,18 +1,72 @@
 <!DOCTYPE html>
 <head>
     <title>Signup Page</title>
+    <style>
+        body {
+            margin: 10px;
+            background-color: beige;
+            font-family: Arial;
+        }
+
+        .text-center {
+            text-align: center;
+            border: 3px solid green;
+            background-color: aliceblue;
+            font-size: 40px;
+            font-weight: bold;
+            padding: 10px;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 25px;
+        }
+
+        .form-container label {
+            text-align: center;
+            display: block;
+            margin: 5px 0;
+            font-size: 18px;
+        }
+
+        .form-container input {
+            width: 200px;
+            padding: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .button-center button {
+            margin: 0 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+    </style>
 </head>
-<body style="margin:0px">
-    <div style="background-color:aliceblue;font-size: 40px;font-weight: bold;">
-        Sign Up
-    </div><br>
+<body>
+    
+<div class="form-container">
+    <h1 class="text-center">Sign Up</h1>
+    
     <label for="username-input">Username</label>
     <input id="username-input"><br>
     <label for="password-input">Password</label>
     <input id="password-input" type="password">
-    <br><br>
+    <br>
+    
+    <div class="button-center">
     <button id="login-button">Login</button>
     <button id="enter-button">Enter</button>
+    </div>
+
+</div>
 
     <!--
         <input type="text" id="myInput" placeholder="Enter text">
