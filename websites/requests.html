@@ -1,7 +1,23 @@
 <!DOCTYPE html>
 <head>
     <title>Requests</title>
+<Style> 
+    body {
+        margin: 10px;
+        background-color: beige;
+        font-family: Arial;
+    }
     
+    .text-center {
+            text-align: center;
+            border: 3px solid green;
+            background-color: aliceblue;
+            font-size: 25px;
+            font-weight: bold;
+            padding: 20px;
+        }
+    
+</Style>
 
 </head>
 <body>
@@ -64,7 +80,8 @@
         let tempHtml = ""
         for(let request of response.requests){
             tempHtml += `
-                <div style="border:1px solid black;margin-bottom:8px;width:400px">
+                <div style="display: flex; flex-direction: column; align-items: center;
+                   border:1px solid black; margin-bottom:8px; width:400px; text-align: center;">
                     <b>$${request.amount}</b> requested from user <b>${request.sender}</b><br>
                     Time of Request: ${new Date(request.time).toLocaleString("en-US")}
 
