@@ -64,7 +64,12 @@
     
     <br>
     <button id="pending-requests-button">See Pending Requests</button>
-    </br>
+    <br>
+
+    <!-- Recent Transactions -->
+    <div id="transaction-list">
+        <!-- Fileld via JavaScript -->
+    </div>
 
 </body>
 <script src="/client-functions.js"></script>
@@ -88,6 +93,50 @@
     const requestButton = document.getElementById("request-button")
 
     const seeRequests = document.getElementById("pending-requests-button")
+
+    async function getRecentTransactions(){
+        let list = document.getElementById("transaction-list")
+
+        let response = await makeServerRequest("get-last-10-transactions", 
+            {sessionId: getCookie("sessionId")})
+
+        if(response.success == false){
+            alert(response.message)
+            return
+        }
+
+        let transactions = response.transactions
+        let tempHtml = ""
+        for(let transaction of transactions){
+
+            // Get username of other userid
+            let response2 = await makeServerRequest("get-user-id-username", {userId: transaction.otherUser})
+            if(response2.success == false){
+                return alert(response2.message)
+            }
+
+            tempHtml += `
+                <div style="border:1px solid black;margin-bottom:8px;width:400px">
+                    <b>${response2.name} ${transaction.type} $${transaction.amount}</b><br>
+                    Approved?: ${transaction.approved}<br>
+                    Time Created: ${new Date(transaction.time).toLocaleString("en-US")}<br>
+
+                </div>`
+            /*
+                transactionId: transaction._id,
+                amount: transaction.amount,
+                time: new Date(transaction.time).toLocaleString(),
+                approved: transaction.approved,
+                type: transaction.senderId == userId ? "sent" : "received",
+                otherUser: transaction.senderId == userId ? transaction.receiverId : transaction.senderId
+            */
+        }
+
+        // Add items to the list
+        list.innerHTML = tempHtml
+    }
+
+    getRecentTransactions()
     
     //sendbutton.innerHTML = "Send Money";
     //document.body.appendChild(sendbutton);

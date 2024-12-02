@@ -366,7 +366,6 @@ app.post("/endpoint/request", function(req,res){
 })
 
 /**
- * AARON
  * 
  * Accept or deny a payment request
  * from another user
@@ -377,7 +376,16 @@ app.post("/endpoint/accept-deny-request", function(req,res){
   let requestJson = req.body
   console.log(requestJson)
 
-  // TODO: Josh - Add validation
+    // Validate
+
+    if(validation.acceptDenyRequest.validate(requestJson).error){
+      res.json({
+        success: false,
+        message: validation.acceptDenyRequest.validate(requestJson).error.message
+      })
+      return
+    }
+
 
   /*
   If request is accepted (requestJson.accept == true), 
@@ -696,16 +704,33 @@ app.post("/endpoint/get-last-10-transactions", function(req, res) {
         // Return the transactions array
         res.json({
           success: true,
-          transactions: transactions.map(transaction => ({
-            transactionId: transaction._id,
-            amount: transaction.amount,
-            time: new Date(transaction.time).toLocaleString(),
-            approved: transaction.approved,
-            type: transaction.senderId == userId ? "sent" : "received",
-            otherUser: transaction.senderId == userId ? transaction.receiverId : transaction.senderId
-          }))
+          transactions: transactions.map(function(transaction){
+              return {
+                transactionId: transaction._id,
+                amount: transaction.amount,
+                time: new Date(transaction.time).toLocaleString(),
+                approved: transaction.approved,
+                type: transaction.senderId == userId ? "sent" : "received",
+                otherUser: transaction.senderId == userId ? transaction.receiverId : transaction.senderId
+              }
+          })
         })
         res.end()
-      });
+      })
   });
 });
+
+/**
+ * Get username of a user id
+ * Input: {userId}
+ * Output: {name}
+ */
+app.post("/endpoint/get-user-id-username", function(req,res){
+  const requestJson = req.body;
+
+  usersDb.findOne({_id: requestJson.userId}, function(err,doc){
+    res.json({success: true, name: doc.username})
+    res.end()
+  })
+  
+})

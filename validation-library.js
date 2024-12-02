@@ -43,6 +43,12 @@ module.exports = {
         amount: Joi.number().required().multiple(0.01).less(0)
     }),
 
+    acceptDenyRequest: Joi.object({
+        sessionId: Joi.number().required(),
+        paymentId: Joi.string().alphanum().required(),
+        accept: Joi.bool().required()
+    }),
+
     getUserInfo: Joi.object({
         sessionId: Joi.string().required()
     }),
