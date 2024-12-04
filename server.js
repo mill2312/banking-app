@@ -591,7 +591,7 @@ app.post("/endpoint/create-new-user", function(req,res){
         // name: requestJson.name,
         username: requestJson.username,
         password: requestJson.password,
-        balance: 0,
+        balance: 100,
       })
       console.log("Success")
       res.json({success: true})
