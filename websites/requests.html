@@ -1,36 +1,43 @@
 <!DOCTYPE html>
 <head>
     <title>Requests</title>
-<Style> 
-    body {
-        margin: 10px;
-        background-color: beige;
-        font-family: Arial;
-    }
-    
-    .text-center {
+<style> 
+        body {
+            margin: 10px;
+            background-color: rgb(245, 245, 240);
+            font-family: Arial;
+        }
+
+        .text-center {
             text-align: center;
-            border: 3px solid green;
+            color: #062417;
+            border: 3px solid #1D6A49;
             background-color: aliceblue;
-            font-size: 25px;
+            font-size: 40px;
             font-weight: bold;
-            padding: 20px;
+            padding: 10px;
         }
     
-</Style>
+</style>
 
 </head>
 <body>
-    <br> You are logged in as <span id="username" style="font-weight: bold;"></span> <br>
-    Balance is <span id="balance" style="font-weight: bold;"></span> <br>
-    
-    <button id="logout-button">Log Out</button>
+
     <button id="payment-page-button">Go Back</button>
+    <button id="logout-button" hidden>Log Out</button><br><br>
+
+
+    <div class="text-center">Payments</div><br>
+    <center>
+        Welcome, <span id="username" style="font-weight: bold;"></span>!
+        Balance: <span id="balance" style="font-weight: bold;"></span><br><br>
+    </center>
+
     <button id="see-requests-button" hidden>See Requests</button>
     <button id="accept-deny-button" hidden>Accept/Deny Requests</button>
     <br>
     <br>
-    <div id="requests-area">
+    <div id="requests-area" style="width:100%">
         <!-- Populated via JavaScript -->
     </div>
 
@@ -81,12 +88,15 @@
         for(let request of response.requests){
             tempHtml += `
                 <div style="display: flex; flex-direction: column; align-items: center;
-                   border:1px solid black; margin-bottom:8px; width:400px; text-align: center;">
+                   background-color: #1D6A49; margin-bottom:8px; width:400px; text-align: center;margin:auto;padding:10px;color:white">
                     <b>$${request.amount}</b> requested from user <b>${request.sender}</b><br>
                     Time of Request: ${new Date(request.time).toLocaleString("en-US")}
-
-                    <button onclick="acceptRequest('${request.paymentId}')">Accept</button>
+                    <br><br>
+                    <div>
+                                            <button onclick="acceptRequest('${request.paymentId}')">Accept</button>
                     <button onclick="denyRequest('${request.paymentId}')">Refund</button>
+                    </div>
+
                 </div>
             `
             /*

@@ -4,69 +4,65 @@
     <style>
         body {
             margin: 10px;
-            background-color: beige;
+            background-color: rgb(245, 245, 240);
             font-family: Arial;
         }
 
         .text-center {
             text-align: center;
-            border: 3px solid green;
+            color: #062417;
+            border: 3px solid #1D6A49;
             background-color: aliceblue;
-            font-size: 25px;
+            font-size: 40px;
             font-weight: bold;
-            padding: 20px;
+            padding: 10px;
         }
 
 
     </style>
 </head>
 <body>
-    You are logged in as <span id="username" style="font-weight: bold;"></span><br>
-    Balance is <span id="balance" style="font-weight: bold;"></span> <br>
-    <button id="logout-button">Log Out</button>
+    <button id="logout-button">Log Out</button><br><br>
+
+    <div class="text-center">Payments</div>
     <br>
-    
-    <div>
-    <h1 class="text-center">Payments</h1>
-    </div>
+    <center>
+        Welcome, <span id="username" style="font-weight: bold;"></span>!
+        Balance: <span id="balance" style="font-weight: bold;"></span><br><br>
+        <button id="pending-requests-button">See Pending Requests</button>
+
+    </center>
+    <br>
     
    
-    <span Style="background-color: aliceblue; font-weight: bold; border: 1px solid;"> Send to User </span>
+    <div style="background-color: aliceblue; font-weight: bold; border: 1px solid; padding:2px"> Send to User </div>
     <br>
-    
 
-<div>
     <label for="username-input-send">Username</label>
-    <input id="username-input-send">
+    <input id="username-input-send"><br>
 
     <label for="amount-input-send">Amount</label>
-    <input id="amount-input-send">
+    <input id="amount-input-send"><br>
     
     <button id="send-button">Send</button>
 
-    <br>
+    <br><br>
     
-    <div Style="margin-top: 20px;">
-    <span Style="background-color: aliceblue; font-weight: bold; border: 1px solid;"> Request from user</span>
+    
+    <div style="background-color: aliceblue; font-weight: bold; border: 1px solid;padding:2px"> Request from user</div>
     <br>
     <label for="username-request">Username</label>
-    <input id="username-request">
+    <input id="username-request"><br>
 
     <label for="amount-request">Amount</label>
-    <input id="amount-request">
+    <input id="amount-request"><br>
 
     <button id="request-button">Request</button>
-    <br>
-    </div>
+    <br><br>
  
-</div>
-    
-    
-    <br>
-    <button id="pending-requests-button">See Pending Requests</button>
-    <br>
-
+    <div style="background-color: aliceblue; font-weight: bold; border: 1px solid;padding:2px"> Recent Transactions</div>
     <!-- Recent Transactions -->
+    <br>
     <div id="transaction-list">
         <!-- Fileld via JavaScript -->
     </div>
@@ -116,10 +112,10 @@
             }
 
             tempHtml += `
-                <div style="border:1px solid black;margin-bottom:8px;width:400px">
+                <div style="width:400px;margin:auto;margin-bottom:8px;padding:5px;background-color: #1D6A49;color:white">
                     <b>${response2.name} ${transaction.type} $${transaction.amount}</b><br>
-                    Approved?: ${transaction.approved}<br>
-                    Time Created: ${new Date(transaction.time).toLocaleString("en-US")}<br>
+                    ${transaction.approved ? "Transaction Approved" : "Transaction Not Approved"}<br>
+                    Time Sent: ${new Date(transaction.time).toLocaleString("en-US")}<br>
 
                 </div>`
             /*

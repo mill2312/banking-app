@@ -4,13 +4,14 @@
     <style>
         body {
             margin: 10px;
-            background-color: beige;
+            background-color: rgb(245, 245, 240);
             font-family: Arial;
         }
 
         .text-center {
             text-align: center;
-            border: 3px solid green;
+            color: #062417;
+            border: 3px solid #1D6A49;
             background-color: aliceblue;
             font-size: 40px;
             font-weight: bold;
@@ -22,6 +23,9 @@
             flex-direction: column;
             align-items: center;
             margin-top: 25px;
+            background-color: rgba(255, 255, 255, 0.533);
+            padding-bottom: 30px;
+            padding-top: 30px;
         }
 
         .form-container label {
@@ -44,26 +48,27 @@
             padding: 10px 20px;
             font-size: 16px;
             border: none;
-            background-color: #4CAF50;
+            background-color: #1D6A49;
             color: white;
+            cursor:pointer;
         }
 
     </style>
 </head>
 <body>
     
-<div class="form-container">
-    <h1 class="text-center">Sign Up</h1>
+    <div class="text-center">Sign Up</div>
     
-    <label for="username-input">Username</label>
-    <input id="username-input"><br>
-    <label for="password-input">Password</label>
+<div class="form-container">
+    
+    <label for="username-input">New Username</label>
+    <input id="username-input">
+    <label for="password-input">New Password</label>
     <input id="password-input" type="password">
     <br>
-    
     <div class="button-center">
-    <button id="login-button">Login</button>
-    <button id="enter-button">Enter</button>
+        <button id="login-button" style="background-color:lightgray;color:black">Log In Instead</button>
+        <button id="enter-button">Enter</button>
     </div>
 
 </div>
