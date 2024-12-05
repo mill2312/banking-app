@@ -231,15 +231,15 @@ app.post("/endpoint/pay", function(req,res){
   // Get the User's ID by their Session ID
 
   usersDb.findOne({sessionId: requestJson.sessionId}, function(senderErr,senderDoc){
-    if(senderErr){res.json({success: false, 
-      message: "Error in getting sender info"})}
+    if(senderErr || senderDoc == null){res.json({success: false, 
+      message: "The current session could not be validated."})}
     let senderId = senderDoc._id
 
     // Get the Receiver's ID by their username
 
     usersDb.findOne({username: requestJson.toUsername}, function(receiverErr,receiverDoc){
-      if(receiverErr){res.json({success: false, 
-        message: "Error in getting receiver info"})}
+      if(receiverErr || receiverDoc == null){res.json({success: false, 
+        message: "The username that money should be sent to is invalid."})}
       let receiverId = receiverDoc._id
 
       /*
@@ -248,7 +248,7 @@ app.post("/endpoint/pay", function(req,res){
       */
 
       addPaymentToDb(senderId, receiverId, requestJson.amount, true, function(err, doc){
-        if(err){res.json({success: false, message: "Error in adding the payment to the database"})}
+        if(err || doc == null){res.json({success: false, message: "Error in adding the payment to the database"})}
         res.json({success: true, transactionId: doc._id})
       })
     })
@@ -287,7 +287,7 @@ function addPaymentToDb(senderId, receiverId, amount, approved, callback){
     // very deep nesting of database calls
 
     usersDb.findOne({_id: receiverId}, function(err,doc){
-      if(err){throw new Error("Unexpected error. The receiverId should be valid.")}
+      if(err || doc == null){throw new Error("Unexpected error. The receiverId should be valid.")}
       /** The current balance of the user */
       let currentReceiverBalance = doc.balance 
       usersDb.update({_id: receiverId}, 
@@ -300,7 +300,7 @@ function addPaymentToDb(senderId, receiverId, amount, approved, callback){
     //usersDb
 
     usersDb.findOne({_id: senderId}, function(err, doc){
-      if(err){throw new Error("Unexpected err. senderId should be valid.")}
+      if(err || doc == null){throw new Error("Unexpected err. senderId should be valid.")}
       // Current balance of sending user.
       let currentSenderBalance = doc.balance
       usersDb.update({_id: senderId}, 
@@ -342,13 +342,13 @@ app.post("/endpoint/request", function(req,res){
   // Get the User's ID by their Session ID
 
   usersDb.findOne({sessionId: requestJson.sessionId}, function(senderErr,senderDoc){
-    if(senderErr){res.json({success: false, message: "Error in getting sender info"})}
+    if(senderErr || senderDoc == null){res.json({success: false, message: "The current session could not be validated."})}
     let senderId = senderDoc._id
 
     // Get the Receiver's ID by their username
 
     usersDb.findOne({username: requestJson.fromUsername}, function(receiverErr,receiverDoc){
-      if(receiverErr){res.json({success: false, message: "Error in getting receiver info"})}
+      if(receiverErr || receiverDoc == null){res.json({success: false, message: "The username that money should be received from is invalid."})}
       let receiverId = receiverDoc._id
 
       /*
@@ -550,7 +550,7 @@ app.post("/endpoint/get-user-info", function(req,res){
     return
   }
   usersDb.findOne({sessionId: requestJson.sessionId}, function(err,doc){
-    if(err){res.json({success: false, message: err.message});return;}
+    if(err || doc == null){res.json({success: false, message: err?.message || "User not found. "});return;}
     // We return true because it successfully ensured the session Id does not exist anymore
     if(doc == null){res.json({success: true, message: `SessionId ${requestJson.sesionId} is already not active`});return;}
     res.json({username: doc.username, balance: doc.balance})
@@ -598,7 +598,7 @@ app.post("/endpoint/create-new-user", function(req,res){
       res.end()
     } else {
       console.log("Fail")
-      res.json({success: false, message: "User already exists"})
+      res.json({success: false, message: "User already exists!"})
       res.end()
     }
   })
@@ -691,7 +691,7 @@ app.post("/endpoint/get-last-10-transactions", function(req, res) {
     const userId = userDoc._id;
 
     // Find the last 10 transactions for this user as either sender or receiver
-    paymentsDb.find({ $or: [{ senderId: userId }, { receiverId: userId }], approved: true })
+    paymentsDb.find({ $or: [{ senderId: userId }, { receiverId: userId }] })
       .sort({ time: -1 }) 
       .limit(10)          
       .exec(function(err, transactions) {
@@ -710,7 +710,7 @@ app.post("/endpoint/get-last-10-transactions", function(req, res) {
                 amount: transaction.amount,
                 time: new Date(transaction.time).toLocaleString(),
                 approved: transaction.approved,
-                type: transaction.senderId == userId ? "sent" : "received",
+                type: transaction.amount > 0 ? (transaction.senderId == userId  ? "sent to" : "requested from") : (transaction.senderId == userId  ? "requested from" : "sent to"),
                 otherUser: transaction.senderId == userId ? transaction.receiverId : transaction.senderId
               }
           })

@@ -74,6 +74,8 @@
         window.location.href = "/payment-page"
     })
 
+    setInterval(getRequestsList, 5000)
+    setInterval(setUserNameAndBalance, 5000)
 
      async function getRequestsList() {
         var sessionIdValue = getCookie("sessionId")
@@ -87,14 +89,14 @@
         let tempHtml = ""
         for(let request of response.requests){
             tempHtml += `
-                <div style="display: flex; flex-direction: column; align-items: center;
-                   background-color: #1D6A49; margin-bottom:8px; width:400px; text-align: center;margin:auto;padding:10px;color:white">
+                <div style="align-items: center;
+                   background-color: #1D6A49; width:400px; text-align: center;margin:auto;padding:10px;color:white;margin-bottom:8px;">
                     <b>$${request.amount}</b> requested from user <b>${request.sender}</b><br>
                     Time of Request: ${new Date(request.time).toLocaleString("en-US")}
                     <br><br>
                     <div>
                                             <button onclick="acceptRequest('${request.paymentId}')">Accept</button>
-                    <button onclick="denyRequest('${request.paymentId}')">Refund</button>
+                    <button onclick="denyRequest('${request.paymentId}')">Deny</button>
                     </div>
 
                 </div>

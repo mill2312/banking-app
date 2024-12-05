@@ -90,6 +90,9 @@
 
     const seeRequests = document.getElementById("pending-requests-button")
 
+    setInterval(getRecentTransactions, 1000 * 5) // Every 5 seconds
+    setInterval(setUserName, 5000) // Every 5 seconds
+
     async function getRecentTransactions(){
         let list = document.getElementById("transaction-list")
 
@@ -111,11 +114,13 @@
                 return alert(response2.message)
             }
 
+            transaction.amount = Math.abs(transaction.amount)
+
             tempHtml += `
                 <div style="width:400px;margin:auto;margin-bottom:8px;padding:5px;background-color: #1D6A49;color:white">
-                    <b>${response2.name} ${transaction.type} $${transaction.amount}</b><br>
+                    <b>$${transaction.amount}</b> ${transaction.type} <b>${response2.name}</b><br>
                     ${transaction.approved ? "Transaction Approved" : "Transaction Not Approved"}<br>
-                    Time Sent: ${new Date(transaction.time).toLocaleString("en-US")}<br>
+                    <!-- Time Sent: ${new Date(transaction.time).toUTCString()}<br> -->
 
                 </div>`
             /*
@@ -189,18 +194,26 @@
     sendButton.addEventListener("click", function() {
         //alert("here"); works
         console.log("Sending Money");
-            //app.get("/login", function(req,res)
-            //window.location.href = "/log-out"
-            sendMoney(document.getElementById("username-input-send").value, document.getElementById("amount-input-send").value )
+        //app.get("/login", function(req,res)
+        //window.location.href = "/log-out"
+        sendMoney(document.getElementById("username-input-send").value, document.getElementById("amount-input-send").value )
+        
+        // Make inputs blank
+        document.getElementById("username-input-send").value = null
+        document.getElementById("amount-input-send").value = null
 
     })
 
     requestButton.addEventListener("click", function() {
         alert("requesting money"); //works
         console.log("Request Sent");
-            //app.get("/login", function(req,res)
-            //window.location.href = "/log-out"
-            requestMoney(document.getElementById("username-request").value, document.getElementById("amount-request").value )
+        //app.get("/login", function(req,res)
+        //window.location.href = "/log-out"
+        requestMoney(document.getElementById("username-request").value, document.getElementById("amount-request").value )
+
+        // Make inputs blank
+        document.getElementById("username-request").value = null
+        document.getElementById("amount-request").value = null
 
     })
 
@@ -251,7 +264,8 @@
             //alert('here');
             console.log('success');
             setUserName();
-            console.log(`Successfully sent $${money} from ${user} to ${targetName}.`);
+            getRecentTransactions();
+            alert(`Successfully sent $${money} to ${targetName}.`);
 
         } else {
             alert(response.message)
@@ -276,8 +290,8 @@
         if (response.success == true) {
             //alert('here');
             console.log('success');
-
-            console.log(`Successfully requested $${money} from ${targetName}.`);
+            setUserName()
+            alert(`Successfully requested $${money} from ${targetName}.`);
 
         } else {
             alert(JSON.stringify(response))
